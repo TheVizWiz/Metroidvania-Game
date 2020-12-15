@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CavesFinalBoss;
@@ -21,8 +22,11 @@ public static class GameManager {
     public static LayerMask strikableLayerMask;
     public static LayerMask slashableLayerMask;
 
+    public static int saveNumber;
+
     private static int oldIndex;
     private static bool isLoading;
+    
 
 
 
@@ -58,6 +62,10 @@ public static class GameManager {
         }
         sceneAnimator.EnterScene();
         isLoading = false;
+    }
+
+    public static string GetPath() {
+        return Path.Combine(Application.persistentDataPath, "Save" + saveNumber);
     }
     
     
