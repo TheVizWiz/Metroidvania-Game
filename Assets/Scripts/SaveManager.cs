@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using JetBrains.Annotations;
+using TMPro;
 using UnityEngine;
 using Object = System.Object;
 
@@ -20,7 +22,7 @@ public static class SaveManager {
     /// <param name="path">path to save the object to, will override files if they already exist</param>
     /// <param name="o">the SaveObject to serialize</param>
     /// <returns>true if the process was completed successfully, false otherwise</returns>
-    public static bool SaveObject(string path, SaveObject o) {
+    public static bool SaveSaveObject<T>(string path, SaveObject<T> o) {
         FileStream stream = new FileStream(Path.Combine(Application.persistentDataPath, path), FileMode.OpenOrCreate);
         formatter.Serialize(stream, o);
         return true;
@@ -31,51 +33,63 @@ public static class SaveManager {
     /// </summary>
     /// <param name="path"> path of the item to be gotten</param>
     /// <returns>null if no file is found, otherwise SaveObject with dictionary from file</returns>
-    public static SaveObject LoadObject(string path) {
+    [CanBeNull]
+    public static SaveObject<T> LoadSaveObject<T>(string path) {
         FileStream stream = new FileStream(Path.Combine(Application.persistentDataPath, path), FileMode.Open);
         if (!stream.CanRead) return null;
-        return formatter.Deserialize(stream) as SaveObject;
+        return formatter.Deserialize(stream) as SaveObject<T>;
     }
 
+
+    public static T LoadObject<T>(string path) where T : class {
+        FileStream stream = new FileStream(Path.Combine(Application.persistentDataPath, path), FileMode.Open);
+        if (!stream.CanRead) return default;
+        return formatter.Deserialize(stream) as T;
+    }
+
+    public static bool SaveObject<T>(string path, T t) where T : class {
+        FileStream stream = new FileStream(Path.Combine(Application.persistentDataPath, path), FileMode.OpenOrCreate);
+        formatter.Serialize(stream, t);
+        return true;
+    }
 }
 
 [Serializable]
-public class SaveObject {
-    private Dictionary<string, object> dictionary;
+public class SaveObject<T> {
+    private Dictionary<string, T> dictionary;
 
     public SaveObject() {
-        dictionary = new Dictionary<string, object>();
+        dictionary = new Dictionary<string, T>();
     }
 
-    public SaveObject(Dictionary<string, object> d) {
-        dictionary = new Dictionary<string, object>();
+    public SaveObject(IDictionary<string, T> d) {
+        dictionary = new Dictionary<string, T>();
         AddAll(d);
 
     }
     
 
-    public void Add(string s, object o) {
+    public void Add(string s, T o) {
         dictionary.Add(s, o);
     }
 
-    public object Get(string s) {
+    public T Get(string s) {
         return dictionary[s];
     }
 
-    public void AddAll(Dictionary<string, object> d) {
-        foreach (KeyValuePair<string, object> o in d) {
-            Add(o.Key, o.Value);
-        }
-    }
-    
-    public void AddAll(Dictionary<string, int> d) {
-        foreach (KeyValuePair<string, int> o in d) {
+    public void AddAll(IDictionary<string, T> d) {
+        foreach (KeyValuePair<string, T> o in d) {
             Add(o.Key, o.Value);
         }
     }
     
     
-    public Dictionary<string, object> GetDictionary() {
+    public Dictionary<string, T> GetDictionary() {
         return dictionary;
     }
+
+    public void Clear() {
+        dictionary = new Dictionary<string, T>();
+    }
+    
 }

@@ -14,9 +14,6 @@ public class LevelManager : MonoBehaviour {
 
     private int currentCameraIndex;
 
-    static LevelManager() {
-        print("test");
-    }
     
 
     void Awake() {
