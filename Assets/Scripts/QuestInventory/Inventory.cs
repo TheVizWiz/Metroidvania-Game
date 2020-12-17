@@ -25,7 +25,9 @@ public static class Inventory {
         } else {
             items.Add(item.name, item);
         }
-        
+
+        QuestManager.UpdateQuests();
+
     }
 
     public static bool Discard(string item, int amount) {

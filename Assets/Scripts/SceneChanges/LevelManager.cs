@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -17,6 +18,8 @@ public class LevelManager : MonoBehaviour {
     
 
     void Awake() {
+        Quest q = Quest.LoadQuest("tester");
+        Debug.Log(q.ToString());
     }
 
     private void Start() {

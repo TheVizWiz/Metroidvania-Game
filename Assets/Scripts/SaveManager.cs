@@ -5,7 +5,9 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using JetBrains.Annotations;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 using Object = System.Object;
 
 public static class SaveManager {
@@ -51,6 +53,11 @@ public static class SaveManager {
         FileStream stream = new FileStream(Path.Combine(Application.persistentDataPath, path), FileMode.OpenOrCreate);
         formatter.Serialize(stream, t);
         return true;
+    }
+
+    public static string[] ReadFileFromResources(string path) {
+        char[] limiters = {'\r', '\n'};
+        return (Resources.Load(path) as TextAsset).text.Split(limiters, StringSplitOptions.RemoveEmptyEntries);
     }
 }
 

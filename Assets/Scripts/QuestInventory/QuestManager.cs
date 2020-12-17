@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestManager : MonoBehaviour {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class QuestManager {
+
+    public static List<Quest> quests;
+
+    static QuestManager() {
+        quests = new List<Quest>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public static void UpdateQuests() {
+        foreach (Quest q in quests) {
+            q.Update();
+        }
     }
 }
