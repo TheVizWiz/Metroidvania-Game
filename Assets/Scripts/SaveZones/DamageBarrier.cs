@@ -16,7 +16,7 @@ public class DamageBarrier : MonoBehaviour {
         SaveZoneHandler.barrier = this;
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
         if (playerTransform.position.y - transform.position.y > distance) {
             ResetPosition();

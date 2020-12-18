@@ -27,7 +27,7 @@ public class Ball : MonoBehaviour, ICarryable {
         used = false;
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     public void Update() {
         UpdatePosition();
 

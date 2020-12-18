@@ -54,7 +54,7 @@ public class DiveController : AbilityController {
         enemiesHit = new Collider2D[100];
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
         if (isActive) {
             if (isCharging) {

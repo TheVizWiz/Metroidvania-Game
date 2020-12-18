@@ -14,7 +14,7 @@ public class DoubleJumpController : AbilityController {
         animString = "DoubleJump";
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
         if (!movement.canMove) {
             Stop();

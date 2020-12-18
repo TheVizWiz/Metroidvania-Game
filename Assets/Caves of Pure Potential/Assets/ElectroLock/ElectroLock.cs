@@ -22,7 +22,7 @@ public class ElectroLock : MonoBehaviour {
         // if (!(Mathf.Abs( - slider.value)))
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
         if (!(Mathf.Abs(charge - slider.value) < acceptableSliderChargeDifference)) {
             if (charge > slider.value) {

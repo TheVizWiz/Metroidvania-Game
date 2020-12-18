@@ -63,7 +63,7 @@ public class SlashController : AbilityController {
         slashAnimator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
         if (isActive) {
             body.MovePosition(chargePosition);

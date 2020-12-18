@@ -47,7 +47,7 @@ public class ShieldController : AbilityController {
         bAnimator = shieldBottom.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
 
         if (Input.GetButtonUp("Shield")) {

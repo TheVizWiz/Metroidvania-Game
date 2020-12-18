@@ -14,7 +14,7 @@ public static class SaveManager {
     
     private static BinaryFormatter formatter;
 
-    static SaveManager() {
+    public static void Initialize() {
         formatter = new BinaryFormatter();
     }
     
@@ -37,7 +37,13 @@ public static class SaveManager {
     /// <returns>null if no file is found, otherwise SaveObject with dictionary from file</returns>
     [CanBeNull]
     public static SaveObject<T> LoadSaveObject<T>(string path) {
-        FileStream stream = new FileStream(Path.Combine(Application.persistentDataPath, path), FileMode.Open);
+        FileStream stream;
+        try {
+            stream = new FileStream(Path.Combine(Application.persistentDataPath, path), FileMode.Open);
+        } catch (FileNotFoundException e) {
+            return null;
+        } 
+
         if (!stream.CanRead) return null;
         return formatter.Deserialize(stream) as SaveObject<T>;
     }

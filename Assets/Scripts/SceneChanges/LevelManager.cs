@@ -18,8 +18,9 @@ public class LevelManager : MonoBehaviour {
     
 
     void Awake() {
-        Quest q = Quest.LoadQuest("tester");
-        Debug.Log(q.ToString());
+        SaveManager.Initialize();
+        Inventory.Initialize();
+        QuestManager.Initialize();
     }
 
     private void Start() {

@@ -14,7 +14,7 @@ public static class Inventory {
     private static SaveObject<InventoryItem> saveObject;
     private static string PATH = "playerinventory";
 
-    static Inventory() {
+    public static void Initialize() {
         items = new Dictionary<string, InventoryItem>();
         saveObject = new SaveObject<InventoryItem>();
     }
@@ -25,9 +25,7 @@ public static class Inventory {
         } else {
             items.Add(item.name, item);
         }
-
         QuestManager.UpdateQuests();
-
     }
 
     public static bool Discard(string item, int amount) {

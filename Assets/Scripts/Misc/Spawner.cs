@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviour {
         elapsedTime = 0;
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
         if (elapsedTime >= timeBetweenSpawns && (!hasToDie || activeObjects.Count < numAlive)) {
             activeObjects.Add(

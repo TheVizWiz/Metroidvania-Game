@@ -10,7 +10,7 @@ public class Shield : MonoBehaviour {
 
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
     }
 

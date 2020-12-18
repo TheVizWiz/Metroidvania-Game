@@ -10,7 +10,7 @@ public class SaveZone : MonoBehaviour {
 
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
 
     }

@@ -54,7 +54,7 @@ public class DashController : AbilityController {
         emissionModule.enabled = false;
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     private void Update() {
         if (isActive) {
             if (upgradeLevel >= 3) {

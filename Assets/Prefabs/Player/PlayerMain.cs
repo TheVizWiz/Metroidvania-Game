@@ -22,7 +22,7 @@ public class PlayerMain : MonoBehaviour {
         
     }
 
-    // Update is called once per frame
+    // CheckDone is called once per frame
     void Update() {
         
     }

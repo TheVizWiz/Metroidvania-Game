@@ -28,12 +28,29 @@ public class Quest {
         steps = new Dictionary<string, QuestStep>();
     }
 
-    public void Update() {
-        currentStep = currentStep.CheckTransition();
-        if (currentStep == null) EndQuest(); 
+    /// <summary>
+    /// checks if quest is finished or not
+    /// </summary>
+    /// <returns>false if quest is not done, true if quest is done</returns>
+    public bool CheckDone() {
+        QuestStep newStep = currentStep.CheckTransition();
+        if (newStep != currentStep) {
+            Debug.Log("moving to new step");
+        }
+        currentStep = newStep;
+        if (currentStep == null) {
+            EndQuest();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void EndQuest() {
+        
+    }
+
+    public void SetCurrentStep(string step) {
         
     }
 
@@ -140,7 +157,6 @@ public class QuestStep {
 
     public override string ToString() {
         string s = name + "\t" + description;
-        Debug.Log(transitions.Count);
         if (transitions.Count == 0) return s;
         foreach (QuestTransition transition in transitions) {
             s += "\n\t" + transition.ToString();

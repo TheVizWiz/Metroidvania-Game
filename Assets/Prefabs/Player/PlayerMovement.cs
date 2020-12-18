@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 		DontDestroyOnLoad(gameObject);
 	}
 
-	// Update is called once per frame
+	// CheckDone is called once per frame
 	private void Update() {
 		if (canMove) {
 			float hInput = Input.GetAxisRaw("Horizontal");
