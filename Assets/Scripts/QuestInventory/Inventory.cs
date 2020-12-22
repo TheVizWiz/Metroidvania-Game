@@ -12,18 +12,19 @@ public static class Inventory {
 
     private static Dictionary<string, InventoryItem> items;
     private static SaveObject<InventoryItem> saveObject;
-    private static string PATH = "playerinventory";
+    private static string itemListPath = "ItemList";
+    private static string PATH = "plinv";
 
     public static void Initialize() {
         items = new Dictionary<string, InventoryItem>();
         saveObject = new SaveObject<InventoryItem>();
     }
 
-    public static void PickUp(InventoryItem item, int amount) {
-        if (HasValue(item.name, amount)) {
-            items[item.name].AddAmount(amount);
+    public static void PickUp(string item, int amount) {
+        if (HasValue(item, amount)) {
+            items[item].AddAmount(amount);
         } else {
-            items.Add(item.name, item);
+            items.Add(item, new InventoryItem(item, amount));
         }
         QuestManager.UpdateQuests();
     }
@@ -41,8 +42,7 @@ public static class Inventory {
     }
 
     public static bool HasValue(string item, int amount) {
-        InventoryItem x;
-        bool check = items.TryGetValue(item, out x);
+        bool check = items.TryGetValue(item, out InventoryItem x);
         if (!check) return false;
         if (x.amount > amount) return true;
         else return false;

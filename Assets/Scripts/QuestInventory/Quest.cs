@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using UnityEditor.Animations;
+using UnityEditor.UIElements;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
@@ -56,11 +55,67 @@ public class Quest {
 
     public static Quest LoadQuest(string path) {
         string[] text = SaveManager.ReadFileFromResources(path);
+        
         if (text == null) return null;
         Quest quest = new Quest(text[0]);
         quest.description = text[1];
 
+        int numSteps = int.Parse(text[2]);
+        int currentLine = 3;
 
+        for (int i = 0; i < numSteps; i++) {
+            QuestStep step = new QuestStep {
+                name = text[++currentLine],
+                description = text[++currentLine]
+            };
+
+
+            int numTransitions = int.Parse(text[++currentLine]);
+            
+            for (int j = 0; j < numTransitions; j++) {
+                //new quest transition
+                QuestTransition transition = new QuestTransition();
+                //parsing new line to get the three types of fields
+                Debug.Log(text[currentLine + 1]);
+                string[] transitionDesc = text[++currentLine].Split(new[]{' '}, 4);
+                foreach (string s in transitionDesc) {
+                    Debug.Log(s);
+                    
+                }
+                int numReqs = int.Parse(transitionDesc[0]);
+                int numAdds = int.Parse(transitionDesc[1]);
+                int numRemoves = int.Parse(transitionDesc[2]);
+                if (transitionDesc.Length > 3 && transitionDesc[3] != "null") {
+                    transition.endQuest = quest.steps[transitionDesc[3]];
+                } else transition.endQuest = null;
+
+                //adding requirements
+                for (int k = 0; k < numReqs; k++) {
+                    string[] line = text[++currentLine].Split(new[] {' '}, 2);
+                    transition.requirements.Add(line[1], int.Parse(line[0]));
+                }
+                
+                //adding addition items
+                for (int k = 0; k < numAdds; k++) {
+                    string[] line = text[++currentLine].Split(new[] {' '}, 2);
+                    transition.addItems.Add(line[1], int.Parse(line[0]));
+                }
+                
+                //adding remove items
+                for (int k = 0; k < numRemoves; k++) {
+                    string[] line = text[++currentLine].Split(new[] {' '}, 2);
+                    transition.removeItems.Add(line[1], int.Parse(line[0]));
+                }
+
+                step.transitions.Add(transition);
+            }
+
+            quest.steps.Add(step.name, step);
+        }
+        
+
+
+        /*
         for (int i = 3; i < text.Length;) {
             
             //setup new quest step
@@ -110,8 +165,8 @@ public class Quest {
 
             quest.steps.Add(step.name, step);
         }
-
-        quest.startStep = quest.steps[text[2]];
+        */
+        quest.startStep = quest.steps[text[3]];
 
         return quest;
     }
@@ -170,10 +225,14 @@ public class QuestStep {
 public class QuestTransition {
     public QuestStep endQuest;
     public Dictionary<string, int> requirements;
+    public Dictionary<string, int> removeItems;
+    public Dictionary<string, int> addItems;
 
 
     public QuestTransition() {
         requirements = new Dictionary<string, int>();
+        removeItems = new Dictionary<string, int>();
+        addItems = new Dictionary<string, int>();
     }
 
     public bool CheckReqs() {
@@ -184,6 +243,13 @@ public class QuestTransition {
         }
 
         return true;
+    }
+
+    public void DoTransition() {
+        foreach (KeyValuePair<string, int> pair in removeItems) {
+            if (pair.Value > 0) Inventory.Discard(pair.Key, pair.Value);
+            // else Inventory.Discard(pair.Key);
+        }
     }
 
     public override string ToString() {

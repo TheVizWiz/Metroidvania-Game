@@ -1,36 +1,9 @@
 ﻿christmas season
 Get the Tree Ready for Santa!
+1
 step 1
-step 5
-get milk to santa
-1
-1
-1 milk
-step 4
-drink milk
-1
-2
-1 milk
-1 bag
-step 3
-go to store to get milk
-2
-1 step 5
-10 sticks
-2 step 4
-15 sticks
-35 counters
-step 2
-get in the car
-1
-1 step 3
-1 car
 step 1
-think about getting milk
+this is the first step
 1
-5 step 2
-1 thought
-1 hoodie
-19 counters
-3 sticks
-1 bde
+1 0 0 null
+2 steps

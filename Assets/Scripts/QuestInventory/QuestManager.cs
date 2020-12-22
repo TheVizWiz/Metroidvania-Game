@@ -32,8 +32,12 @@ public class QuestManager {
         foreach (KeyValuePair<string, Quest> quest in quests) {
             Debug.Log(quest.ToString());
         }
-        
+        // Inventory.PickUp(new InventoryItem("thought", 1));
+
     }
+    
+    
+    
 
     public static void UpdateQuests() {
         foreach (KeyValuePair<string, Quest> q in quests) {
