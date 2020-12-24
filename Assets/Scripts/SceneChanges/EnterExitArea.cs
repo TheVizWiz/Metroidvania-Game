@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEditor.Experimental.AssetImporters;
 using UnityEngine;
@@ -17,11 +16,11 @@ public enum SpawnAreaType {
 
 public class EnterExitArea : MonoBehaviour {
 
-    private static float time = 1.0f;
-    private static Vector2 verticalPos = new Vector2(0, 5);
-    private static Vector2 horizontalPosStart= new Vector2(5, 0);
-    private static Vector2 horizontalPosFinish = new Vector2(4, 0);
-    private static Vector2 horizontalVAddition = new Vector2(0, 0.75f);
+    private const float moveTime = 0.75f;
+    private static readonly Vector2 verticalPos = new Vector2(0, 5);
+    private static readonly Vector2 horizontalPosStart= new Vector2(5, 0);
+    private static readonly Vector2 horizontalPosFinish = new Vector2(4, 0);
+    private static readonly Vector2 horizontalVAddition = new Vector2(0, 0.75f);
 
     private new Transform transform;
     private new Collider2D collider;
@@ -53,7 +52,6 @@ public class EnterExitArea : MonoBehaviour {
         Vector3 endPos = Vector3.zero;
         Vector3 position = transform.position;
         Vector2 areaPos = new Vector2(position.x, position.y);
-        
         player.SetMobility(false);
 
         collider.enabled = false;
@@ -92,8 +90,8 @@ public class EnterExitArea : MonoBehaviour {
         }
 
         float timeLeft = 0;
-        float conversionFactor = 1 / time; 
-        while (timeLeft <= time) {
+        float conversionFactor = 1 / moveTime; 
+        while (timeLeft <= moveTime) {
             timeLeft += Time.deltaTime * conversionFactor; 
             player.transform.position = Vector3.Lerp(startPos, endPos, timeLeft);
             yield return null;

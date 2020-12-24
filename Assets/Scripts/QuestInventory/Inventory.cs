@@ -21,8 +21,9 @@ public static class Inventory {
     }
 
     public static void PickUp(string item, int amount) {
-        if (HasValue(item, amount)) {
+        if (items.TryGetValue(item, out _)) {
             items[item].AddAmount(amount);
+            Debug.Log($"{items[item].amount} of {item} now in inventory");
         } else {
             items.Add(item, new InventoryItem(item, amount));
         }

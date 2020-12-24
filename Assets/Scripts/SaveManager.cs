@@ -12,12 +12,8 @@ using Object = System.Object;
 
 public static class SaveManager {
     
-    private static BinaryFormatter formatter;
+    private static BinaryFormatter formatter = new BinaryFormatter();
 
-    public static void Initialize() {
-        formatter = new BinaryFormatter();
-    }
-    
     /// <summary>
     /// Saves a SaveObject at the given path.
     /// </summary>

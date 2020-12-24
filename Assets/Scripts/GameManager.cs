@@ -1,16 +1,9 @@
-﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using CavesFinalBoss;
-using Packages.Rider.Editor.UnitTesting;
 using UnityEngine;
+using System.IO;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.WSA;
 
-public static class GameManager {
+public class GameManager{
     
     public static GameObject player;
     public static SceneAnimator sceneAnimator;
@@ -23,12 +16,14 @@ public static class GameManager {
     public static LayerMask slashableLayerMask;
 
     public static int saveNumber;
+    public static bool isInitialized = false;
 
     private static int oldIndex;
     private static bool isLoading;
-    
 
-
+    public LayerMask enemyMask;
+    public LayerMask strikableMask;
+    public LayerMask slashableMask;
 
     public static IEnumerator LoadScene(int newIndex) {
         if (isLoading) yield break;
@@ -44,7 +39,7 @@ public static class GameManager {
 
         while (operation.progress < 0.9 && time < 0.5) {
             time += Time.deltaTime;
-                yield return null;
+            yield return null;
         }
         
         // Debug.Log("finished load");

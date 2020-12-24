@@ -33,12 +33,10 @@ public class Quest {
     /// <returns>false if quest is not done, true if quest is done</returns>
     public bool CheckDone() {
         QuestStep newStep = currentStep.CheckTransition();
-        if (newStep != currentStep) {
-            Debug.Log("moving to new step");
-        }
+        
         currentStep = newStep;
+        
         if (currentStep == null) {
-            EndQuest();
             return true;
         } else {
             return false;
@@ -46,7 +44,7 @@ public class Quest {
     }
 
     public void EndQuest() {
-        
+        Debug.Log("Quest has been ended");
     }
 
     public void SetCurrentStep(string step) {
@@ -76,15 +74,12 @@ public class Quest {
                 //new quest transition
                 QuestTransition transition = new QuestTransition();
                 //parsing new line to get the three types of fields
-                Debug.Log(text[currentLine + 1]);
                 string[] transitionDesc = text[++currentLine].Split(new[]{' '}, 4);
-                foreach (string s in transitionDesc) {
-                    Debug.Log(s);
-                    
-                }
                 int numReqs = int.Parse(transitionDesc[0]);
                 int numAdds = int.Parse(transitionDesc[1]);
                 int numRemoves = int.Parse(transitionDesc[2]);
+                
+                
                 if (transitionDesc.Length > 3 && transitionDesc[3] != "null") {
                     transition.endQuest = quest.steps[transitionDesc[3]];
                 } else transition.endQuest = null;
@@ -167,7 +162,6 @@ public class Quest {
         }
         */
         quest.startStep = quest.steps[text[3]];
-
         return quest;
     }
 

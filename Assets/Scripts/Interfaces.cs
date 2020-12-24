@@ -33,4 +33,10 @@ namespace Interfaces {
         bool Explode(float damage, ElementType element);
     }
 
+    public interface IProgressBar {
+        void SetCurrentValue(float newVal);
+
+        float GetCurrentValue();
+    }
+
 }
