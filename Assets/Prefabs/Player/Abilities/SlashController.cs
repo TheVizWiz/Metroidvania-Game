@@ -68,7 +68,6 @@ public class SlashController : AbilityController {
         if (isActive) {
             body.MovePosition(chargePosition);
             if (isCharging) {
-                print("charging");
                 elapsedChargeTime += Time.deltaTime;
                 if (Input.GetButtonUp("Slash") || Input.GetAxis("Slash") < Constants.AXIS_SENSE) {
                     if (elapsedChargeTime >= chargeTime) {
@@ -81,7 +80,6 @@ public class SlashController : AbilityController {
             }
 
             if (isCharged) {
-                print("charged");
                 slashAnimator.SetTrigger("Slash");
                 Vector2 point = new Vector2(body.position.x + movement.lookDirection * center.x,
                     body.position.y + center.y);
@@ -193,6 +191,7 @@ public class SlashController : AbilityController {
                 weakenPercentage = 0;
             }
 
+            if (!main.UseMana(manaCost)) return false;
             isActive = true;
             timeSinceLastActivation = 0;
             movement.canMove = false;

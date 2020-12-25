@@ -172,12 +172,14 @@ public class DiveController : AbilityController {
                 dazeAmount = level7DazeAmount;
 
 
+            if (!main.UseMana(manaCost)) return false;
             isActive = true;
             movement.canTurn = false;
             movement.canMove = false;
             movement.canAttack = false;
             tempPosition = body.position;
             elapsedChargeTime = 0;
+            return true;
         }
 
         return false;

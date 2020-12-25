@@ -20,34 +20,29 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MaskTex:
+    - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _NormalMap:
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_41A7487B: 7.29
+    - Vector1_41A7487B: 3
     - Vector1_C4A8A3D4: 2
     - Vector1_D9ACE80F: 2
-    - Vector1_DD21D3BC: 1.34
-    - Vector1_EEAE2C3A: 5
-    - Vector1_F28E703C: 1
-    - Vector1_F2902CA4: 1.34
-    - _EnableExternalAlpha: 0
+    - Vector1_DD21D3BC: 3
+    - Vector1_F2902CA4: 3
     m_Colors:
-    - Color_F1185E37: {r: 5.447131, g: 0, b: 6.4222345, a: 0}
+    - Color_F1185E37: {r: 1.686275, g: 0, b: 2, a: 0}
     - Vector2_D997E255: {r: 1.74, g: 1.02, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

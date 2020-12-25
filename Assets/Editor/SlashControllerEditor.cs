@@ -32,7 +32,6 @@ public class SlashControllerEditor : Editor {
     public static void DrawGizmos(SlashController controller, GizmoType type) {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(player.transform.position + new Vector3(center.x, center.y, 0), range);
-
     }
 
 }

@@ -1,14 +1,25 @@
 ﻿using System;
+using TMPro;
 using Unity.Mathematics;
+using UnityEditor;
+using UnityEditor.ShaderGraph.Drawing.Inspector.PropertyDrawers;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class PlayerMain : MonoBehaviour {
 
     [SerializeField] private float maxHealth;
     [SerializeField] private float maxMana;
-    
+    [SerializeField] private ProgressBar healthBar;
+    [SerializeField] private ProgressBar manaBar;
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI manaText;
+
+
     public float health;
     public float mana;
+
+    private float damageMultiplier;
 
     private AudioListener audioListener;
 
@@ -21,30 +32,92 @@ public class PlayerMain : MonoBehaviour {
     void Start() {
         
     }
-
-    // CheckDone is called once per frame
-    void Update() {
-        
+    
+    public void Update() {
+        if (Input.GetKeyDown(KeyCode.Keypad1)) {
+            Damage(10);
+        } else if (Input.GetKeyDown(KeyCode.Keypad2)) {
+            UseMana(10);
+        } else if (Input.GetKeyDown(KeyCode.Keypad4)) {
+            AddHealth(10);
+        } else if (Input.GetKeyDown(KeyCode.Keypad5)) {
+            AddMana(10);
+        }    
     }
 
-    public bool UseMana() { 
+    public bool UseMana(float amount) {        
+        if (mana < amount) return false;
+        mana -= amount;
+        if (mana < 0) mana = 0;
+        UpdateManaUI();
         return true;
     }
     
     public void AddMana(float amount) {
-        
+        mana = Mathf.Min(mana + amount, maxMana);
+        UpdateManaUI();
     }
 
-    public bool Damage(int damageMultiplier) {
-        
-        return false;
-    }
-
-    public bool Damage() {
-        return false;
+    public bool Damage(float amount) {
+        if (amount > health) return false;
+        health -= amount;
+        if (health < 0) health = 0;
+        UpdateHealthUI();
+        return true;
     }
 
     public void AddHealth(float amount) {
-        
+        health = Mathf.Min(health + amount, maxHealth);
+        UpdateHealthUI();
     }
+
+    public ProgressBar GetHealthBar() {
+        return healthBar;
+    }
+
+    public ProgressBar GetManaBar() {
+        return manaBar;
+    }
+
+    public void UpdateHealthUI() {
+        // healthBar.SetMax(maxHealth);
+        // manaBar.SetMax(maxMana);
+        healthBar.SetCurrentValue(health, false);
+        HealthText.text = (int) health + "/" + (int) maxHealth;
+    }
+
+    public void UpdateManaUI() {
+        manaBar.SetCurrentValue(mana, false);
+        ManaText.text = (int) mana + "/" + (int) maxMana;
+    }
+
+    public float MaxHealth {
+        get => maxHealth;
+        set => maxHealth = value;
+    }
+
+    public float MaxMana {
+        get => maxMana;
+        set => maxMana = value;
+    }
+
+    public TextMeshProUGUI ManaText => manaText;
+    public TextMeshProUGUI HealthText => healthText;
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(PlayerMain))]
+internal class PlayerMainCustomEditor : Editor {
+    public override void OnInspectorGUI() {
+        base.OnInspectorGUI();
+        PlayerMain main = ((PlayerMain) target);
+        main.GetHealthBar().UpdateBarFromEditor(0, main.MaxHealth, main.health);
+        main.GetManaBar().UpdateBarFromEditor(0, main.MaxMana, main.mana);
+        main.mana = Mathf.Min(Mathf.Max(0, main.mana), main.MaxMana);
+        main.health = Mathf.Min(Mathf.Max(0, main.health), main.MaxHealth);
+        main.ManaText.text = (int) main.mana + "/" + (int) main.MaxMana;
+        main.HealthText.text = (int) main.health + "/" + (int) main.MaxHealth;
+    }
+}  
+#endif
+

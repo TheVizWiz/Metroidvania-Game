@@ -125,8 +125,8 @@ public class StrikeController : AbilityController {
             } else {
                 timeBetweenActivations = level1TimeBetweenActivations;
             }
-
-            // isActive = true;
+            
+            
             timeSinceLastActivation = 0;
             animator.SetTrigger("Strike");
             movement.canTurn = false;
@@ -137,6 +137,7 @@ public class StrikeController : AbilityController {
 
             int numHit = Physics2D.OverlapCircleNonAlloc(body.position + new Vector2(center.x * movement.lookDirection, center.y), range, objectsHit,
                 GameManager.strikableLayerMask);
+            
             for (int i = 0; i < numHit; i++) {
                 try {
                     objectsHit[i].gameObject.GetComponent<IStrikable>().Strike(damage, ElementType.Light);
