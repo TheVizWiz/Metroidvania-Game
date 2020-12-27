@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ElectroWater
-  m_Shader: {fileID: -6465566751694194690, guid: 83e2aecc4a0f4d641a2cbb7f5faf3d48,
+  m_Name: HealthShader
+  m_Shader: {fileID: -6465566751694194690, guid: aad47645eb7eb704b9a58e958d7c3130,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -20,7 +20,19 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -37,12 +49,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_41A7487B: 3
-    - Vector1_C4A8A3D4: 2
-    - Vector1_D9ACE80F: 2
-    - Vector1_DD21D3BC: 0.4
-    - Vector1_F2902CA4: -0.05
+    - Vector1_1d45e74b1fa547a0b5e60c021fca6b60: 75
+    - Vector1_5776fe3dcac542198a015d1d3db2a9db: 0.01
+    - Vector1_6c8cfc7cdf83482597e72f63b5c3e280: 1.5
+    - _EnableExternalAlpha: 0
     m_Colors:
-    - Color_F1185E37: {r: 1.686275, g: 0, b: 2, a: 0}
-    - Vector2_D997E255: {r: 35.52, g: 1.02, b: 0, a: 0}
+    - Color_6f2a9c5859524cc6ae1025dba1738f3e: {r: 7.610493, g: 7.610493, b: 7.610493,
+        a: 0}
+    - Vector3_f3b0f62732ba4104b95128676d469579: {r: 1, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

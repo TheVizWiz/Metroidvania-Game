@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager{
     
     public static GameObject player;
+    public static PlayerMain playerMain;
+    public static PlayerMovement playerMovement;
     public static SceneAnimator sceneAnimator;
     public static LevelManager levelManager;
     public static CameraController cameraController;
@@ -15,7 +17,7 @@ public class GameManager{
     public static LayerMask strikableLayerMask;
     public static LayerMask slashableLayerMask;
 
-    public static int saveNumber;
+    public static int saveNumber = 0;
     public static bool isInitialized = false;
 
     private static int oldIndex;

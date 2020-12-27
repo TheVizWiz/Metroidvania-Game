@@ -20,6 +20,9 @@ public class LevelManager : MonoBehaviour {
         if (!GameManager.isInitialized) {
             QuestManager.Initialize();
             Inventory.Initialize();
+            SaveManager.Initialize();
+            NPCManager.Initialize();
+            // DialogueManager.Initialize();
             GameManager.isInitialized = true;
         }
         areaIndex = SceneManager.GetActiveScene().buildIndex;
