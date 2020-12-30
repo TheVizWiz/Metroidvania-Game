@@ -7,18 +7,30 @@ public class NPC{
 
     public string name;
     public string description;
+    public string autoDeclineMessage;
 
     private List<Dialogue> dialogues;
     // Start is called before the first frame update
-    public void LoadNPC() {
-        string[] file = SaveManager.ReadFileFromResources(name);
+
+
+    public NPC() {
+        dialogues = new List<Dialogue>();
+    }
+    public static NPC LoadNPC(string filePath) {
+        string[] file = SaveManager.ReadFileFromResources(filePath);
+        NPC npc = new NPC();
         int currentLine = 0;
+        npc.name = file[currentLine];
+        npc.description = file[++currentLine];
+        npc.autoDeclineMessage = file[++currentLine];
+        ++currentLine;
         while (currentLine < file.Length) {
             Dialogue dialogue = new Dialogue();
-            dialogue.CreateDialogue(file, ref currentLine);
-            Debug.Log(currentLine);
-            dialogues.Add(dialogue);
+            dialogue.LoadDialogue(file, ref currentLine);
+            npc.dialogues.Add(dialogue);
         }
+
+        return npc;
     }
 
     public Dialogue ActivateDialogue() {

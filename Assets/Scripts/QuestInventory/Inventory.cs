@@ -23,7 +23,6 @@ public static class Inventory {
     public static void PickUp(string item, int amount) {
         if (items.TryGetValue(item, out _)) {
             items[item].AddAmount(amount);
-            Debug.Log($"{items[item].amount} of {item} now in inventory");
         } else {
             items.Add(item, new InventoryItem(item, amount));
         }
@@ -33,7 +32,7 @@ public static class Inventory {
     public static bool Discard(string item, int amount) {
         if (!HasValue(item, amount)) return false;
         InventoryItem inventoryItem = items[item];
-        if (inventoryItem.amount <= amount) return false;
+        if (inventoryItem.amount < amount) return false;
         if (inventoryItem.RemoveAmount(amount)) {
             items.Remove(item);
             return true;
@@ -45,7 +44,7 @@ public static class Inventory {
     public static bool HasValue(string item, int amount) {
         bool check = items.TryGetValue(item, out InventoryItem x);
         if (!check) return false;
-        if (x.amount > amount) return true;
+        if (x.amount >= amount) return true;
         else return false;
     }
     

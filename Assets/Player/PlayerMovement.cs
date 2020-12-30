@@ -25,11 +25,12 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 	[HideInInspector] public bool canAttack;
 	[HideInInspector] public bool canMove;
 	[HideInInspector] public bool canTurn;
+	[HideInInspector] public bool canInteract;
 	[HideInInspector] public bool isInAir;
 	[HideInInspector] public bool isCarrying;
 	[HideInInspector] public bool isInUI;
 	[HideInInspector] public bool canBashDownwards;
-	[HideInInspector] public int lookDirection;
+	[HideInInspector] public int lookDirection = 1;
 	private int horizontalInput;
 
 	private float timeSinceLastCarry;
@@ -57,6 +58,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 		if (GameManager.playerMovement == null) {
 			GameManager.playerMain = main;
 			GameManager.playerMovement = this;
+			GameManager.player = this.gameObject;
 		}
 		DontDestroyOnLoad(gameObject);
 		// LoadLevels();
@@ -71,6 +73,10 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 		} else if (Input.GetKeyDown(KeyCode.Keypad6)) {
 			LoadLevels();
 			print("finished loading levels");
+		}
+
+		if (canInteract && !isInAir && Input.GetButtonDown("Interact") && GameManager.dialogueManager.CurrentPosition != DialogueManagerPosition.ShownPosition) {
+			GameManager.dialogueManager.Show();
 		}
 
 		if (canMove && !isInUI) {

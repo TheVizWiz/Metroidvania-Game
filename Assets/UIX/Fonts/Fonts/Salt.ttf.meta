@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 2e1050bed1b6262498a78184365b512e
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Salt
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: db0762d2d0dff8c42b2a195250dc37a2, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

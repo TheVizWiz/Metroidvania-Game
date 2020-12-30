@@ -39,4 +39,10 @@ namespace Interfaces {
         float GetCurrentValue();
     }
 
+    public interface IAnimatedUI {
+        void Show();
+
+        void Hide();
+    }
+
 }

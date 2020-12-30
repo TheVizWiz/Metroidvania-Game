@@ -1,0 +1,12 @@
+﻿Maya
+Exiled of the World's End
+It seems you are not ready for this. Perhaps another time.
+0 3
+This is the first line of dialogue. $The quick brown fox jumps over the lazy dog. $This is the third line of dialogue, I am making this line very long because I want to test if this line is good or if it is bad or if it is not either at all.
+0 1 Buy for 500 dollars
+1 steps
+Well then. We shall see what happens to you, shall we not? $Now, get out of my sight. I do not wish to see you again. $...especially not with what you have caused me.
+0 0 Sell
+You can leave now. $I will not have the blood of a bounty hunter upon my hands. $What for would you want to stay anyways? $Next time I see you, I will kill you.
+0 0 Leave
+Well then. You shall live to fight another day. $...Perhaps.

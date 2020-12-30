@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System.IO;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager{
@@ -12,6 +13,7 @@ public class GameManager{
     public static LevelManager levelManager;
     public static CameraController cameraController;
     public static DialogueManager dialogueManager;
+    public static EventSystem eventSystem;
 
     public static LayerMask enemyLayerMask;
     public static LayerMask strikableLayerMask;
@@ -64,6 +66,7 @@ public class GameManager{
     public static string GetPath() {
         return Path.Combine(Application.persistentDataPath, "Save" + saveNumber);
     }
+    
     
     
 }

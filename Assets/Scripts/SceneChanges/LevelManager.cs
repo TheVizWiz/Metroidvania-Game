@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour {
             QuestManager.Initialize();
             Inventory.Initialize();
             SaveManager.Initialize();
-            NPCManager.Initialize();
+            // NPCManager.Initialize();
             // DialogueManager.Initialize();
             GameManager.isInitialized = true;
         }

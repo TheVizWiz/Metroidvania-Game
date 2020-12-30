@@ -54,7 +54,7 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
-  m_ShadowIntensity: 0
+  m_ShadowIntensity: 1
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
@@ -139,7 +139,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -634.9, y: -585}
+  m_AnchoredPosition: {x: -800, y: -585}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7406630377070187796
@@ -198,19 +198,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -7.4
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -1.43
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -5269,7 +5269,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -344.6, y: -540}
+  m_AnchoredPosition: {x: -434.69998, y: -540}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1952420638673109730
@@ -5328,19 +5328,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 46.6
-  m_fontSizeBase: 46.6
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -7.4
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -1.43
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -11166,6 +11166,7 @@ MonoBehaviour:
   canAttack: 1
   canMove: 1
   canTurn: 1
+  canInteract: 0
   isInAir: 0
   isCarrying: 0
   isInUI: 0
@@ -22231,6 +22232,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3975685822993358906, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
         type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7375
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975685822993358906, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -22323,6 +22329,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ManaBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962276542344578409, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107415942515754213, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6107415942515754213, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
         type: 3}
@@ -22435,6 +22451,11 @@ PrefabInstance:
         type: 3}
       propertyPath: current
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2803063064757362308, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
+        type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3975685822993358906, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
         type: 3}
@@ -22575,6 +22596,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Health Bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 5962276542344578409, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6107415942515754213, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6113399645519594950, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
+        type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7314531132906898665, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
         type: 3}

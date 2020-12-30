@@ -9,6 +9,8 @@ public class JumpController : AbilityController {
     [SerializeField] private float maxTime;
 
     public override bool Activate() {
+        if (movement.isInUI) return false;
+        if (movement.canInteract) return false;
         if (!hasJumped && !movement.isInAir && Input.GetButtonDown("Jump")) {
             hasJumped = true;
             isActive = true;
