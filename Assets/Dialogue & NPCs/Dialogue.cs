@@ -71,26 +71,23 @@ public class Dialogue {
     public void LoadDialogue(string[] textLines, ref int currentLine) {
         lines = new Queue<string>();
         string[] array = textLines[currentLine].Split(new[] {' '}, 4);
-        
         int numReqs = int.Parse(array[0]);
         int numOptions = int.Parse(array[1]);
+        for (int i = 0; i < numReqs; i++) {
+            string[] item = textLines[++currentLine].Split(new[] {' '}, 2);
+            requirements.Add(item[1], int.Parse(item[0]));
+        }
+        
         array = textLines[++currentLine].Split('$');
         foreach (string s in array) {
             staticLines.Enqueue(s);
             lines.Enqueue(s);
         }
 
-        for (int i = 0; i < numReqs; i++) {
-            string[] item = textLines[++currentLine].Split(new[] {' '}, 2);
-            requirements.Add(item[1], int.Parse(item[0]));
-        }
-
         ++currentLine;
         for (int i = 0; i < numOptions; i++) {
             options.Add(DialogueOption.CreateOption(textLines, ref currentLine));
         }
-
-        ++currentLine;
     }
 
     public bool CheckReqs() {

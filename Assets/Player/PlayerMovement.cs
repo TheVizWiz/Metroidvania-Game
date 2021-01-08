@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Permissions;
 using Interfaces;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour, ICarrier {
@@ -225,6 +226,14 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 	public void UpdateUpgradeLevels() {
 		foreach (AbilityController controller in abilities) {
 			upgradeLevels[controller.fileString] = controller.GetUpgradeLevel();
+		}
+	}
+
+	public void SwitchScenes() {
+		if (carryable != null) {
+			isCarrying = false;
+			canAttack = true;
+			carryable = null;
 		}
 	}
 

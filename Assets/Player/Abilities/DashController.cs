@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class DashController : AbilityController {
 
-    [SerializeField] private ParticleSystem particles;
-    private ParticleSystem.EmissionModule emissionModule;
-    [SerializeField] private TrailRenderer trail;
+    [SerializeField] private ParticleSystem[] particles;
+    // private ParticleSystem.EmissionModule emissionModule;
+    [SerializeField] private TrailRenderer[] trails;
     [SerializeField] private float dashTime;
 
     [Header("Level 1")] 
@@ -43,7 +43,7 @@ public class DashController : AbilityController {
     private void Start() {   
         Setup();
         fileString = "dashController";
-        emissionModule = particles.emission;
+        // emissionModule = particles.emission;
         timeSinceLastActivation = Mathf.Infinity;
         timeSinceLastExplosion = Mathf.Infinity;
         distanceDashed = 0;
@@ -51,8 +51,10 @@ public class DashController : AbilityController {
         isCharging = false;
         isCharged = false;
         explodedHitEnemyColliders = new Collider2D[]{};
-        trail.emitting = false;
-        emissionModule.enabled = false;
+        SetParticleEmissions(false);
+        SetTrailEmissions(false);
+        // trail.emitting = false;
+        // emissionModule.enabled = false;u
     }
 
     // CheckDone is called once per frame
@@ -118,8 +120,8 @@ public class DashController : AbilityController {
             if (willActivate) {
                 isActive = true;
                 elapsedTime = 0;
-                trail.emitting = true;
-                emissionModule.enabled = true;
+                SetTrailEmissions(true);
+                SetParticleEmissions(true);
                 movement.canMove = false;
                 movement.canTurn = false;
                 dashPosition = body.position;
@@ -139,8 +141,8 @@ public class DashController : AbilityController {
         isCharging = false;
         exploded = false;
         isActive = false;
-        trail.emitting = false;
-        emissionModule.enabled = false;
+        SetTrailEmissions(false);
+        SetParticleEmissions(false);
         movement.canTurn = true;
         movement.canMove = true;
         return true;
@@ -155,5 +157,21 @@ public class DashController : AbilityController {
         StartCoroutine(
             Explosion.CreateExplosion(position, explosionRadius, damage, ElementType.Dark, chainDamage,
                 GameManager.enemyLayerMask, waitTime));
+    }
+
+    private void SetParticleEmissions(bool flag) {
+        foreach (ParticleSystem system in particles) {
+            if (flag) {
+                system.Play();
+            } else {
+                system.Stop();
+            }
+        }
+    }
+
+    private void SetTrailEmissions(bool flag) {
+        foreach (TrailRenderer trailRenderer in trails) {
+            trailRenderer.emitting = flag;
+        }
     }
 }

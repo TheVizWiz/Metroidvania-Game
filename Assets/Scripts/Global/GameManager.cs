@@ -13,7 +13,6 @@ public class GameManager{
     public static LevelManager levelManager;
     public static CameraController cameraController;
     public static DialogueManager dialogueManager;
-    public static EventSystem eventSystem;
 
     public static LayerMask enemyLayerMask;
     public static LayerMask strikableLayerMask;
@@ -34,6 +33,7 @@ public class GameManager{
         else isLoading = true;
         
         oldIndex = levelManager.areaIndex;
+        playerMovement.SwitchScenes();
         sceneAnimator.ExitScene();
         
         AsyncOperation operation = SceneManager.LoadSceneAsync(newIndex);

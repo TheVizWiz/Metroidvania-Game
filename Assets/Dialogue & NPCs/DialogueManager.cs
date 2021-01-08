@@ -24,7 +24,7 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
     [SerializeField] private bool moveIn;
     [SerializeField] private float time;
     [SerializeField] private float charactersPerSecond;
-    [SerializeField] private DialogueManagerPosition currentPosition;
+    [SerializeField] public DialogueManagerPosition currentPosition;
 
     private NPC npc;
     private Dialogue activeDialogue;
@@ -46,6 +46,8 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
         if (fadeIn) {
             canvasGroup.alpha = 0;
         }
+
+        Inventory.PickUp("mayastepstarter", 1);
     }
 
     // Update is called once per frame
@@ -75,7 +77,7 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
                     pressedInteract = false;
                 }
             } else {
-                if (activeDialogue.IsLastLine() && !optionsAreShown && !isAnimatingText) {
+                if ((activeDialogue == null) || (activeDialogue.IsLastLine() && !optionsAreShown && !isAnimatingText)) {
                     Hide();
                 } else if (activeDialogue != null && activeDialogue.HasNextLine() && !isAnimatingText) {
                     StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0));
@@ -199,6 +201,11 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
     }
 
     private void ShowOptions() {
+        if (activeDialogue.Options.Count == 0) {
+            optionsAreShown = false;
+            passedOption = true;
+            return;
+        }
         foreach (DialogueOption option in activeDialogue.Options) {
             GameObject optionObject = Instantiate(optionPrefab, optionsPane.transform, false);
             TextMeshProUGUI text = optionObject.GetComponentInChildren<TextMeshProUGUI>();

@@ -5,13 +5,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IStrikable, ISlashable, IExplodable {
 
     public float health;
-    public float dazeReducePerSecond;
     public int playerDamageMultiplier;
     public float weakenMultiplier;
     private float weakenTimeLeft;
-
-    private float dazeAmount;
-    private float currentDazeAmount;
 
     [HideInInspector] public int lookDirection;
 
@@ -26,13 +22,8 @@ public class Enemy : MonoBehaviour, IStrikable, ISlashable, IExplodable {
     }
 
     public void Update() {
-        dazeAmount = Mathf.Max(dazeAmount -= dazeReducePerSecond * Time.deltaTime, 0);
         weakenTimeLeft -= Time.deltaTime;
         if (weakenTimeLeft <= 0) weakenMultiplier = 0;
-
-        if (lookDirection != (int) transform.lossyScale.x) {
-            
-        }
 
     }
 
