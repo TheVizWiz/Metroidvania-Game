@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.EventSystems;
@@ -13,6 +14,7 @@ public class GameManager{
     public static LevelManager levelManager;
     public static CameraController cameraController;
     public static DialogueManager dialogueManager;
+    public static List<string> preferencesList;
 
     public static LayerMask enemyLayerMask;
     public static LayerMask strikableLayerMask;
@@ -20,9 +22,9 @@ public class GameManager{
 
     public static int saveNumber = 0;
     public static bool isInitialized = false;
+    public static bool isLoading;
 
     private static int oldIndex;
-    private static bool isLoading;
 
     public LayerMask enemyMask;
     public LayerMask strikableMask;
@@ -65,6 +67,12 @@ public class GameManager{
 
     public static string GetPath() {
         return Path.Combine(Application.persistentDataPath, "Save" + saveNumber);
+    }
+
+    public static void WipeTempPreferences() {
+        foreach (string s in preferencesList) {
+            PlayerPrefs.DeleteKey(s);
+        }
     }
     
     

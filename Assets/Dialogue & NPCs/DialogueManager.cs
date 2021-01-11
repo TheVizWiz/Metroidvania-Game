@@ -41,7 +41,6 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
         GameManager.dialogueManager = this;
         transform.anchoredPosition = hidePosition;
         currentPosition = DialogueManagerPosition.HiddenPosition;
-        NPCManager.Initialize();
         SetNPC(NPCManager.npcs["Maya"]);
         if (fadeIn) {
             canvasGroup.alpha = 0;

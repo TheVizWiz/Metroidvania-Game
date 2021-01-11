@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
+using UnityEditor.Android;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
@@ -21,9 +22,12 @@ public class CameraController : MonoBehaviour {
         foreach (CinemachineVirtualCamera camera in followCameras) {
             camera.Follow = GameManager.player.transform;
         }
-        
-        cameras[startCam].Priority = 10;
-        currentCam = cameras[startCam];
+
+        if (startCam < cameras.Length) {
+            cameras[startCam].Priority = 10;
+            currentCam = cameras[startCam];
+        }
+
         for (int i = 1; i < cameras.Length; i++) {
             cameras[i].Priority = 0;
         }

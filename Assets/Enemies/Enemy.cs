@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Enemy : MonoBehaviour, IStrikable, ISlashable, IExplodable {
 

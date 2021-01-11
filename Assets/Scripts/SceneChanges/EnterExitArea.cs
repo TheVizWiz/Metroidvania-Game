@@ -31,7 +31,7 @@ public class EnterExitArea : MonoBehaviour {
     public int nextSceneIndex;
     public SpawnAreaType spawnAreaType;
 
-    void Awake() {
+    public void Setup() {
         transform = GetComponent<Transform>();
         collider = GetComponent<Collider2D>();
         player = GameManager.player.GetComponent<PlayerMovement>();

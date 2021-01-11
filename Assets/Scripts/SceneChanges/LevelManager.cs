@@ -21,14 +21,18 @@ public class LevelManager : MonoBehaviour {
             QuestManager.Initialize();
             Inventory.Initialize();
             SaveManager.Initialize();
-            // NPCManager.Initialize();
-            // DialogueManager.Initialize();
+            NPCManager.Initialize();
             GameManager.isInitialized = true;
+            PlayerPrefs.DeleteAll();
+
         }
         areaIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     private void Start() {
+        foreach (EnterExitArea area in areas) {
+            area.Setup();
+        }
         GameManager.EnterScene(this);
     }
 

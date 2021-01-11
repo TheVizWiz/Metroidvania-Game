@@ -25,8 +25,7 @@ public class PlayerMain : MonoBehaviour {
 
     private void Awake() {
         audioListener = GetComponent<AudioListener>();
-        if (GameManager.player == null) GameManager.player = this.gameObject;
-        else Destroy(this.gameObject);
+
     }
 
     void Start() {

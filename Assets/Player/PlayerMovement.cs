@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Security.Permissions;
 using Interfaces;
 using UnityEditor;
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 
 
 	// Start is called before the first frame update
-	private void Start() {
+	private void Awake() {
 		isInAir = false;
 		canBashDownwards = false; 
 		body = GetComponent<Rigidbody2D>();
@@ -60,6 +61,8 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 			GameManager.playerMain = main;
 			GameManager.playerMovement = this;
 			GameManager.player = this.gameObject;
+		} else {
+			Destroy(this.gameObject);
 		}
 		DontDestroyOnLoad(gameObject);
 		// LoadLevels();

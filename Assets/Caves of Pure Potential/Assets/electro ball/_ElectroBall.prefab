@@ -87,6 +87,9 @@ GameObject:
   - component: {fileID: 5548722693371402426}
   - component: {fileID: 5548722693371402425}
   - component: {fileID: 7936281313366399705}
+  - component: {fileID: 2030243018325886149}
+  - component: {fileID: 8858127330379139381}
+  - component: {fileID: 3242794192559173184}
   m_Layer: 11
   m_Name: _ElectroBall
   m_TagString: Untagged
@@ -124,6 +127,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -327,3 +331,40 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2030243018325886149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5548722693371402429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4e942159f241e44a3c2e861ad49614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handlerString: eball
+--- !u!114 &8858127330379139381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5548722693371402429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b4bfb60d7cb0fc45a67b512e8817098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3242794192559173184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5548722693371402429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a2889c8b1b0b0c4fa571fb4fcb45f10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

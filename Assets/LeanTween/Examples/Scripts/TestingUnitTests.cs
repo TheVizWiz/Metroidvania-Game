@@ -127,7 +127,7 @@ namespace DentedPixel.LTExamples
 
             //          Debug.Log("Point 2:"+cr.ratioAtPoint(splineArr[2]));
 
-            // OnStart Speed Test for ignoreTimeScale vs normal timeScale
+            // OnStart Speed Retrieve for ignoreTimeScale vs normal timeScale
 
             GameObject cubeDest = cubeNamed("cubeDest");
             Vector3 cubeDestEnd = new Vector3(100f, 20f, 0f);
