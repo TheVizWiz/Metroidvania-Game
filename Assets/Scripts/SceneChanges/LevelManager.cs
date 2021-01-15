@@ -24,7 +24,7 @@ public class LevelManager : MonoBehaviour {
             NPCManager.Initialize();
             GameManager.isInitialized = true;
             PlayerPrefs.DeleteAll();
-
+            Inventory.PickUp("mayastepstarter", 1);
         }
         areaIndex = SceneManager.GetActiveScene().buildIndex;
     }

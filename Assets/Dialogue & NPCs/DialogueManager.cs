@@ -38,15 +38,16 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
     private bool waitToUpdatePlayerUI;
     private bool pauseUpdate;
     void Awake() {
+        // NPCManager.Initialize();
         GameManager.dialogueManager = this;
         transform.anchoredPosition = hidePosition;
         currentPosition = DialogueManagerPosition.HiddenPosition;
-        SetNPC(NPCManager.npcs["Maya"]);
+        // SetNPC(NPCManager.npcs["Maya"]);
         if (fadeIn) {
             canvasGroup.alpha = 0;
         }
 
-        Inventory.PickUp("mayastepstarter", 1);
+        
     }
 
     // Update is called once per frame

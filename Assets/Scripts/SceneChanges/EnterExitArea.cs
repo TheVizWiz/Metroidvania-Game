@@ -4,12 +4,13 @@ using UnityEditor;
 using UnityEditor.Experimental.AssetImporters;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
 
 
 public enum SpawnAreaType {
     Left,
     Right,
-    Top,
+    Top, 
     Bottom,
     Ascendant
 }
@@ -40,13 +41,6 @@ public class EnterExitArea : MonoBehaviour {
         collider.enabled = true;
     }
 
-
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Keypad0)) {
-            player.transform.position = Vector2.zero;
-        }
-    }
-
     public IEnumerator Enter() { 
         Vector3 startPos = Vector3.zero;
         Vector3 endPos = Vector3.zero;
@@ -73,11 +67,16 @@ public class EnterExitArea : MonoBehaviour {
                 break;
             
             case SpawnAreaType.Top:
-                startPos = areaPos + verticalPos;
-                endPos = areaPos;
                 player.SetAnimationBool(PlayerMovement.fallString, true);
-                break;
-            
+                player.transform.position = areaPos;
+                // player.SetMobility(true);
+                // player.canMove = true;
+                // player.canTurn = false;
+                yield return new WaitForSeconds(moveTime);
+                collider.enabled = true;
+                player.SetMobility(true);
+                yield break;
+
             case SpawnAreaType.Bottom:
                 startPos = areaPos - verticalPos;
                 endPos = areaPos;
@@ -89,12 +88,18 @@ public class EnterExitArea : MonoBehaviour {
                 break;
         }
 
+
         float timeLeft = 0;
-        float conversionFactor = 1 / moveTime; 
+        float conversionFactor = 1 / moveTime;
         while (timeLeft <= moveTime) {
-            timeLeft += Time.deltaTime * conversionFactor; 
+            timeLeft += Time.deltaTime * conversionFactor;
             player.transform.position = Vector3.Lerp(startPos, endPos, timeLeft);
             yield return null;
+
+        }
+        
+        if (spawnAreaType == SpawnAreaType.Bottom) {
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.up;
         }
 
         collider.enabled = true;
@@ -103,12 +108,21 @@ public class EnterExitArea : MonoBehaviour {
 
     public IEnumerator Exit() {
         
+        Vector3 startPos = player.transform.position;
+        Vector2 areaPos = transform.position;
+        Vector2 endPos;
+        player.SetMobility(false);
+        
         switch (spawnAreaType) {
             case SpawnAreaType.Left:
                 break;
             case SpawnAreaType.Right:
                 break;
             case SpawnAreaType.Top:
+                endPos = areaPos + verticalPos * 2;
+                LeanTween.value(gameObject, f => {
+                    player.transform.position = Vector3.Lerp(startPos, endPos, f);
+                }, 0, 1, moveTime);
                 break;
             case SpawnAreaType.Bottom:
                 break;
@@ -123,6 +137,7 @@ public class EnterExitArea : MonoBehaviour {
         if (other.gameObject.CompareTag(Constants.PLAYER_TAG)) {
             // print("collided");
             collider.enabled = false;
+            StartCoroutine(Exit());
             StartCoroutine(GameManager.LoadScene(nextSceneIndex));
         }
     }
