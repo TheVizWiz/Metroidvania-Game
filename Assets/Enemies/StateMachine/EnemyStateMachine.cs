@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Enemy))]
 public abstract class EnemyStateMachine : StateMachine {
     // Start is called before the first frame update
 
-    protected Enemy enemy;
+    [HideInInspector] public Enemy enemy;
     [SerializeField] protected float detectionRadius;
-    
+
     protected override void Start() {
-        base.Start();
         enemy = GetComponent<Enemy>();
+        base.Start();
     }
 
 

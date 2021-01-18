@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GeneralEnemyStates;
 using Interfaces;
 using UnityEngine;
 
@@ -10,15 +11,22 @@ using UnityEditor;
 public class SafeEnemy : EnemyStateMachine {
 
     [SerializeField] private bool isAggro;
+    public Vector2 startPos;
+    public Vector2 endPos;
 
     protected override void Start() {
         base.Start();
-        IdleState locateIdleState = new IdleState(enemy, this);
-        AddState("locate state", locateIdleState);
-        SetStartState(locateIdleState);
-
+        WaitState waitState = new WaitState(this, 0.5f);
+        GeneralMoveState moveState = new GeneralMoveState(this, startPos, endPos, 2f, LeanTweenType.easeInOutSine);
+        Transition waitToMove = new Transition(waitState, moveState, () => waitState.isFinished);
+        Transition moveToWait = new Transition(moveState, waitState, () => moveState.isFinished);
+        AddState("wait", waitState);
+        AddState("move", moveState);
+        SetStartState(waitState);
+        transitions.Add(waitToMove);
+        transitions.Add(moveToWait);
         // Transition transition = new Transition(locateIdleState, null, () =>
-            // );
+        // );
     }
 
     protected override void Update() {
@@ -54,6 +62,14 @@ internal class SafeEnemyCustomEditor: Editor {
     public override void OnInspectorGUI() {
         base.OnInspectorGUI();
         
+    }
+    
+    [DrawGizmo(GizmoType.Active | GizmoType.Selected)]
+    public static void DrawGizmos(SafeEnemy enemy, GizmoType type) {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(enemy.startPos, 0.1f);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(enemy.endPos, 0.1f);
     }
 }
 

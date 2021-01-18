@@ -16,11 +16,13 @@ public class Enemy : MonoBehaviour, IStrikable, ISlashable, IExplodable {
 
     public Rigidbody2D body;
     public new Transform transform;
+    public Animator animator;
 
 
     public void Awake() {
         body = GetComponent<Rigidbody2D>();
         transform = GetComponent<Transform>();
+        animator = GetComponent<Animator>();
     }
 
     public void Update() {
