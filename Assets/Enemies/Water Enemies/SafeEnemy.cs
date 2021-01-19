@@ -67,9 +67,9 @@ internal class SafeEnemyCustomEditor: Editor {
     [DrawGizmo(GizmoType.Active | GizmoType.Selected)]
     public static void DrawGizmos(SafeEnemy enemy, GizmoType type) {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(enemy.startPos, 0.1f);
+        Gizmos.DrawSphere(enemy.startPos, 0.2f);
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(enemy.endPos, 0.1f);
+        Gizmos.DrawSphere(enemy.endPos, 0.2f);
     }
 }
 

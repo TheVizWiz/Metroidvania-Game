@@ -3,11 +3,10 @@ using UnityEngine;
 
 [CustomEditor(typeof(SlashController))]
 public class SlashControllerEditor : Editor {
-
     private static Vector2 center, range;
     private static GameObject player;
-    public override void OnInspectorGUI() {
 
+    public override void OnInspectorGUI() {
         base.OnInspectorGUI();
 
 
@@ -24,8 +23,6 @@ public class SlashControllerEditor : Editor {
             range = serializedObject.FindProperty("level1Range").vector2Value;
             center = serializedObject.FindProperty("level1Center").vector2Value;
         }
-
-
     }
 
     [DrawGizmo(GizmoType.Active | GizmoType.Selected)]
@@ -33,5 +30,4 @@ public class SlashControllerEditor : Editor {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(player.transform.position + new Vector3(center.x, center.y, 0), range);
     }
-
 }

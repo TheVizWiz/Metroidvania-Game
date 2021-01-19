@@ -40,10 +40,8 @@ namespace CavesFinalBoss {
 
         }
 
-        protected new void Update() {
+        public new void Update() {
             base.Update();
-            
-            
         }
 
         public void FinishIdleAnimation() {
@@ -83,7 +81,7 @@ namespace CavesFinalBoss {
             this.spiderBoss = boss;
         }
         public override void OnEnter() {
-            animator.SetInteger("Idle", spiderBoss.idleAnimationStateInt);
+            enemy.animator.SetInteger("Idle", spiderBoss.idleAnimationStateInt);
             spiderBoss.idleAnimationStateInt = -1;
         }
 

@@ -5,11 +5,10 @@ using UnityEngine;
 
 namespace GeneralEnemyStates {
     public class WaitState : IEnemyState {
-
         public bool isFinished;
         private float waitTime;
         private float timeWaited;
-        
+
         public WaitState(EnemyStateMachine stateMachine, float waitTime) : base(stateMachine.enemy) {
             isFinished = false;
             this.waitTime = waitTime;
@@ -27,21 +26,21 @@ namespace GeneralEnemyStates {
             if (!isFinished) {
                 timeWaited += Time.deltaTime;
                 if (timeWaited >= waitTime) isFinished = true;
-            } 
+            }
         }
     }
 
     public class GeneralMoveState : IEnemyState {
-        
-        private Vector2 startPosition;
-        private Vector2 endPosition;
+        private Vector2 startPos;
+        private Vector2 endPos;
         private LeanTweenType easeType;
         private float moveTime;
         public bool isFinished;
 
-        public GeneralMoveState(EnemyStateMachine stateMachine, Vector2 startPos, Vector2 endPos, float moveTime, LeanTweenType easeType) : base(stateMachine.enemy) {
-            startPosition = startPos;
-            endPosition = endPos;
+        public GeneralMoveState(EnemyStateMachine stateMachine, Vector2 startPos, Vector2 endPos, float moveTime,
+            LeanTweenType easeType) : base(stateMachine.enemy) {
+            this.startPos = startPos;
+            this.endPos = endPos;
             this.moveTime = moveTime;
             this.easeType = easeType;
             isFinished = false;
@@ -49,15 +48,20 @@ namespace GeneralEnemyStates {
 
         public override void OnEnter() {
             isFinished = false;
-            Debug.Log("start pos: " + startPosition + "\nend pos: " + endPosition);
-            enemy.transform.position = startPosition;
-            LeanTween.move(enemy.gameObject, endPosition, moveTime).setEase(easeType)
+            Debug.Log("start pos: " + startPos + "\nend pos: " + endPos);
+            enemy.transform.position = startPos;
+            LeanTween.move(enemy.gameObject, endPos, moveTime).setEase(easeType)
                 .setOnComplete(o => isFinished = true);
         }
 
+        public void SetPositions (Vector2 startPos, Vector2 endPos) {
+            this.startPos = startPos;
+            this.endPos = endPos;
+        }
+
         public override void OnExit() {
-            endPosition = startPosition;
-            startPosition = enemy.transform.position;
+            endPos = startPos;
+            startPos = enemy.transform.position;
         }
 
         public override void Update() {

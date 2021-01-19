@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
 public class StateMachine : MonoBehaviour {
 
@@ -8,11 +9,15 @@ public class StateMachine : MonoBehaviour {
     protected Dictionary<string, IState> states;
     protected IState activeState;
     protected IState startState;
+    protected double randomFloat;
+    private Random randomGen;
 
     protected virtual void Start() { 
         activeState = startState;
         transitions = new List<Transition>();
         states = new Dictionary<string, IState>();
+        randomGen = new Random();
+        randomFloat = randomGen.NextDouble();
     }
 
     protected virtual void Update() {
@@ -21,7 +26,7 @@ public class StateMachine : MonoBehaviour {
 
         foreach (Transition transition in transitions) {
             if ((transition.GetStartState() == activeState || transition.GetStartState() == IState.ANY_STATE) && transition.CheckCondition()) {
-                
+                randomFloat = randomGen.NextDouble();
                 activeState.OnExit();
                 activeState = transition.GetEndState();
                 activeState.OnEnter();
