@@ -32,7 +32,7 @@ public class NPCBehaviour : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.gameObject.layer == GameManager.player.layer) {
+        if (other.gameObject.CompareTag(Constants.PLAYER_TAG)) {
             GameManager.playerMovement.canInteract = false;
             GameManager.dialogueManager.hideEvent.RemoveListener(RestartNPC);
         }

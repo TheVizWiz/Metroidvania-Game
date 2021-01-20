@@ -12,7 +12,7 @@ public enum SpawnAreaType {
     Right,
     Top, 
     Bottom,
-    Ascendant
+    SaveSpot
 }
 
 public class EnterExitArea : MonoBehaviour {
@@ -69,9 +69,7 @@ public class EnterExitArea : MonoBehaviour {
             case SpawnAreaType.Top:
                 player.SetAnimationBool(PlayerMovement.fallString, true);
                 player.transform.position = areaPos;
-                // player.SetMobility(true);
-                // player.canMove = true;
-                // player.canTurn = false;
+                player.canMove = true;
                 yield return new WaitForSeconds(moveTime);
                 collider.enabled = true;
                 player.SetMobility(true);
@@ -83,7 +81,7 @@ public class EnterExitArea : MonoBehaviour {
                 player.SetAnimationBool(PlayerMovement.jumpString, true);
                 break;
             
-            case SpawnAreaType.Ascendant:
+            case SpawnAreaType.SaveSpot:
                 player.SetAnimationTrigger(PlayerMovement.ascendantString);
                 break;
         }
@@ -126,7 +124,7 @@ public class EnterExitArea : MonoBehaviour {
                 break;
             case SpawnAreaType.Bottom:
                 break;
-            case SpawnAreaType.Ascendant:
+            case SpawnAreaType.SaveSpot:
                 break;
         }
         

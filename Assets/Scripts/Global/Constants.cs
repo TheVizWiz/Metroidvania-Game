@@ -8,6 +8,7 @@ public class Constants {
     public static int CARRYABLE_LAYER = 11;
 
     public static string PLAYER_TAG = "Player";
+    public static string CARRYABLE_TAG = "Carryable";
 
     public static float ERROR = 0.0000001f;
     public static float INPUT_ERROR = 0.01f;
