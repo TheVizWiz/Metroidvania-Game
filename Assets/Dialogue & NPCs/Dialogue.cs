@@ -7,22 +7,26 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
+[Serializable]
 public class Dialogue {
     
-    private Queue<string> lines;
-    private Queue<string> staticLines;
-    private List<DialogueOption> options;
-    private Dictionary<string, int> requirements;
+    public List<string> lines;
+    public List<string> staticLines;
+    public List<DialogueOption> options;
+    // public Dictionary<string, int> requirements;
+    public List<InventoryItem> requirements;
 
     public Dialogue() {
-        lines = new Queue<string>();
-        staticLines = new Queue<string>();
+        lines = new List<string>();
+        staticLines = new List<string>();
         options = new List<DialogueOption>();
-        requirements = new Dictionary<string, int>();
+        requirements = new List<InventoryItem>();
     }
 
     public string GetNextLine() {
-        return lines.Dequeue();
+        string s = lines[0];
+        lines.RemoveAt(0);
+        return s;
     }
 
     public bool HasNextLine() {
@@ -40,18 +44,23 @@ public class Dialogue {
     public void ResetLines() {
         lines.Clear();
         foreach (string s in staticLines) {
-            lines.Enqueue(s);
+            lines.Add(s);
         }
     }
 
-    [ItemCanBeNull] public List<DialogueOption> Options => options;
+    public void InitializeStaticLines() {
+        foreach (string s  in lines) {
+            staticLines.Add(s);
+        }
+    }
+
 
     public bool EndDialogue(string optionPicked) {
         foreach (DialogueOption option in options) {
             if (option.displayString == optionPicked) {
-                Queue<string> strings = option.pickStrings;
+                List<string> strings = option.pickStrings;
                 foreach (string s in strings) {
-                    this.lines.Enqueue(s);
+                    this.lines.Add(s);
                 }
                 return option.Finish();
             }
@@ -68,72 +77,28 @@ public class Dialogue {
     /// </summary>
     /// <param name="textLines"></param>
     /// <param name="start"></param>
-    public void LoadDialogue(string[] textLines, ref int currentLine) {
-        lines = new Queue<string>();
-        string[] array = textLines[currentLine].Split(new[] {' '}, 4);
-        int numReqs = int.Parse(array[0]);
-        int numOptions = int.Parse(array[1]);
-        for (int i = 0; i < numReqs; i++) {
-            string[] item = textLines[++currentLine].Split(new[] {' '}, 2);
-            requirements.Add(item[1], int.Parse(item[0]));
-        }
-        
-        array = textLines[++currentLine].Split('$');
-        foreach (string s in array) {
-            staticLines.Enqueue(s);
-            lines.Enqueue(s);
-        }
-
-        ++currentLine;
-        for (int i = 0; i < numOptions; i++) {
-            options.Add(DialogueOption.CreateOption(textLines, ref currentLine));
-        }
-    }
 
     public bool CheckReqs() {
-        foreach (KeyValuePair<string, int> req in requirements) {
-            if (!Inventory.HasValue(req.Key, req.Value)) return false;
+        foreach (InventoryItem item in requirements) {
+            if (!Inventory.HasValue(item.name, item.amount)) return false;
         }
 
         return true;
     }
 }
 
+[Serializable]
 public class DialogueOption {
 
-    public Queue<string> pickStrings;
+    public List<string> pickStrings;
     public string displayString;
-    private List<InventoryItem> additionItems;
-    private List<InventoryItem> removeItems;
-
-    public static DialogueOption CreateOption(string[] file, ref int currentLine) {
-        string[] firstLine = file[currentLine].Split(new[] {' '}, 3);
-        int numAdditions = int.Parse(firstLine[0]);
-        int numRemovals = int.Parse(firstLine[1]);
-        DialogueOption option = new DialogueOption {displayString = firstLine[2]};
-
-        for (int i = 0; i < numAdditions; i++) {
-            string[] line = file[++currentLine].Split(new[] {' '}, 2);
-            option.additionItems.Add(new InventoryItem(line[1], int.Parse(line[0])));
-        }
-        for (int i = 0; i < numRemovals; i++) {
-            string[] line = file[++currentLine].Split(new[] {' '}, 2);
-            option.removeItems.Add(new InventoryItem(line[1], int.Parse(line[0])));
-        }
-
-        string[] endLine = file[++currentLine].Split('$');
-        for (int i = 0; i < endLine.Length; i++) {
-            option.pickStrings.Enqueue(endLine[i]);
-        }
-
-        ++currentLine;
-        return option;
-    }
+    public List<InventoryItem> additionItems;
+    public List<InventoryItem> removeItems;
 
     public DialogueOption() {
         additionItems = new List<InventoryItem>();
         removeItems = new List<InventoryItem>();
-        pickStrings = new Queue<string>();
+        pickStrings = new List<string>();
     }
 
     public bool Finish() {
@@ -152,7 +117,7 @@ public class DialogueOption {
         return true;
     }
 
-    public Queue<string> GetEndStrings() {
+    public List<string> GetEndStrings() {
         return pickStrings;
     }
 }

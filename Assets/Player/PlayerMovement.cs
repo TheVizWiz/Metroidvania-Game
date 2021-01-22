@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 	public static readonly string diveString = "Dive";
 	public static readonly string chargeString = "Charge";
 	public static readonly string doubleJumpString = "DoubleJump";
-	public static readonly string ascendantString = "Ascendant";
+	public static readonly string ascendantString = "SaveSpot";
 	public static readonly string filePath = "abfpth";
 
 

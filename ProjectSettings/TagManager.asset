@@ -8,6 +8,8 @@ TagManager:
   - Camera Follow
   - NPC
   - Carryable
+  - Standable
+  - InstantDamage
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - UI
   - Camera
   - 
-  - Standable
+  - Environment
   - Player
   - Enemies
   - Interactable

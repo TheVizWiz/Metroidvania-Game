@@ -201,12 +201,12 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
     }
 
     private void ShowOptions() {
-        if (activeDialogue.Options.Count == 0) {
+        if (activeDialogue.options.Count == 0) {
             optionsAreShown = false;
             passedOption = true;
             return;
         }
-        foreach (DialogueOption option in activeDialogue.Options) {
+        foreach (DialogueOption option in activeDialogue.options) {
             GameObject optionObject = Instantiate(optionPrefab, optionsPane.transform, false);
             TextMeshProUGUI text = optionObject.GetComponentInChildren<TextMeshProUGUI>();
             // GameManager.eventSystem.firstSelectedGameObject = optionObject;

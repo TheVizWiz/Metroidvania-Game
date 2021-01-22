@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class NPCManager {
@@ -11,8 +12,9 @@ public class NPCManager {
         string[] npcList = SaveManager.ReadFileFromResources(Path.Combine(filePath, "master"));
         npcs = new Dictionary<string, NPC>();
         foreach (string s in npcList) {
-            NPC npc = NPC.LoadNPC(Path.Combine(filePath, s));
+            NPC npc = NPC.LoadNPCFromJSON(Path.Combine(filePath, s));
             npcs.Add(npc.name, npc);
+            Debug.Log(npc);
         }
     }
 

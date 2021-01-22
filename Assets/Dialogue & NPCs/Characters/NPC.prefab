@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: 
-  areaCollider: {fileID: 0}
+  areaCollider: {fileID: 1435020913958495712}
 --- !u!50 &7653356219452792562
 Rigidbody2D:
   serializedVersion: 4

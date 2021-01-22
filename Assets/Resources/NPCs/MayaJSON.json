@@ -1,0 +1,43 @@
+﻿{
+  "name": "Maya",
+  "description": "Exiled of the World's End",
+  "autoDeclineMessage": "It seems you are not ready for this. Perhaps another time.",
+  "dialogues": [
+    {
+      "lines": [
+        "abcdefg", "this is the second line", "this is the third line"
+      ],
+      "requirements": [
+        {
+          "name": "mayastepstarter",
+          "amount": 1
+        }
+      ],
+      "options": [
+        {
+          "displayString" : "This is the first option",
+          "pickStrings" : [
+            "thank you for picking this option", "this seems to be working quite well."
+          ],
+          "additionItems": [
+            {
+              "name" : "mayasecondstep",
+              "amount" : 1
+            }
+          ],
+          "removeItems": [
+            {
+              "name" : "mayastepstarter",
+              "amount" : 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lines": [],
+      "requirements": [],
+      "options": []
+    }
+  ]
+}
