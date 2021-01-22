@@ -1,0 +1,109 @@
+﻿{
+  "required": [
+    "name",
+    "description",
+    "startStepString",
+    "stepList"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "startStepString": {
+      "type": "string"
+    },
+    "stepList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "description",
+          "transitions"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "transitions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "endQuest",
+                "requirements",
+                "removeItems",
+                "addItems"
+              ],
+              "properties": {
+                "endQuest": {
+                  "type": "string"
+                },
+                "requirements": {
+                  "type": "array",
+                  "items": {
+                    "required": [
+                      "name",
+                      "amount"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "amount": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                },
+                "removeItems": {
+                  "type": "array",
+                  "items": {
+                    "required": [
+                      "name",
+                      "amount"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "amount": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                },
+                "addItems": {
+                  "type": "array",
+                  "items": {
+                    "required": [
+                      "name",
+                      "amount"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "amount": {
+                        "type": "integer",
+                        "minimum": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

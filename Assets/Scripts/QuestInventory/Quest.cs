@@ -10,7 +10,9 @@ public class Quest {
     
     public string name;
     public string description;
+    public string startStepString;
     public QuestStep currentStep, startStep;
+    public List<QuestStep> stepList;
     private Dictionary<string, QuestStep> steps;
 
     static Quest() {
@@ -32,9 +34,18 @@ public class Quest {
     /// </summary>
     /// <returns>false if quest is not done, true if quest is done</returns>
     public bool CheckDone() {
-        QuestStep newStep = currentStep.CheckTransition();
+        string s = currentStep.CheckTransition();
+        if (s == "") {
+            currentStep = null;
+            return true;
+        } else if (s != null) {
+            currentStep = steps[s];
+            return false;
+        }
+        return false;
+        // QuestStep newStep = currentStep.CheckTransition();
         
-        currentStep = newStep;
+        // currentStep = newStep;
         
         if (currentStep == null) {
             return true;
@@ -47,123 +58,21 @@ public class Quest {
         Debug.Log("Quest has been ended");
     }
 
-    public void SetCurrentStep(string step) {
-        
+    public void Initialize() {
+        steps = new Dictionary<string, QuestStep>();
+        foreach (QuestStep step in stepList) {
+            steps.Add(step.name, step);
+        }
+        startStep = steps[startStepString];
+        currentStep = startStep;
     }
-
-    public static Quest LoadQuest(string path) {
-        string[] text = SaveManager.ReadFileFromResources(path);
-        
-        if (text == null) return null;
-        Quest quest = new Quest(text[0]);
-        quest.description = text[1];
-
-        int numSteps = int.Parse(text[2]);
-        int currentLine = 3;
-
-        for (int i = 0; i < numSteps; i++) {
-            QuestStep step = new QuestStep {
-                name = text[++currentLine],
-                description = text[++currentLine]
-            };
-
-
-            int numTransitions = int.Parse(text[++currentLine]);
-            
-            for (int j = 0; j < numTransitions; j++) {
-                //new quest transition
-                QuestTransition transition = new QuestTransition();
-                //parsing new line to get the three types of fields
-                string[] transitionDesc = text[++currentLine].Split(new[]{' '}, 4);
-                int numReqs = int.Parse(transitionDesc[0]);
-                int numAdds = int.Parse(transitionDesc[1]);
-                int numRemoves = int.Parse(transitionDesc[2]);
-                
-                
-                if (transitionDesc.Length > 3 && transitionDesc[3] != "null") {
-                    transition.endQuest = quest.steps[transitionDesc[3]];
-                } else transition.endQuest = null;
-
-                //adding requirements
-                for (int k = 0; k < numReqs; k++) {
-                    string[] line = text[++currentLine].Split(new[] {' '}, 2);
-                    transition.requirements.Add(line[1], int.Parse(line[0]));
-                }
-                
-                //adding addition items
-                for (int k = 0; k < numAdds; k++) {
-                    string[] line = text[++currentLine].Split(new[] {' '}, 2);
-                    transition.addItems.Add(line[1], int.Parse(line[0]));
-                }
-                
-                //adding remove items
-                for (int k = 0; k < numRemoves; k++) {
-                    string[] line = text[++currentLine].Split(new[] {' '}, 2);
-                    transition.removeItems.Add(line[1], int.Parse(line[0]));
-                }
-
-                step.transitions.Add(transition);
-            }
-
-            quest.steps.Add(step.name, step);
-        }
-        
-
-
-        /*
-        for (int i = 3; i < text.Length;) {
-            
-            //setup new quest step
-            QuestStep step = new QuestStep();
-            step.name = text[i];
-            i++;
-            step.description = text[i];
-
-            //find number of transitions
-            i++;
-            int numTransitions = int.Parse(text[i]);
-            int transitionIndex = 0;
-            if (numTransitions > 0) {
-                i++;
-                transitionIndex = i + numTransitions;
-            }
-
-            //iterate through all the transitions
-            for (int j = 0; j < numTransitions; j++) {
-                
-                //setup new QuestTransition
-                string[] transitionLine = text[i].Split(new[]{' '}, 2);
-                QuestTransition transition = new QuestTransition();
-
-                if (transitionLine.Length == 2) {
-                    transition.endQuest = quest.steps[transitionLine[1]];
-                }
-                else transition.endQuest = null;
-                
-                //find number of reqs in given transition
-                int numRequirements = int.Parse(transitionLine[0]);
-                int reqIndex = 0;
-                if (numRequirements > 0) {
-                    i++;
-                    reqIndex = i + numRequirements;
-                }
-
-                //iterate through all the reqs for the given transition
-                for (; i < reqIndex; i++) {
-                    string[] reqs = text[i].Split(new[] {' '}, 2);
-                    transition.requirements.Add(reqs[1], int.Parse(reqs[0]));
-                }
-                
-                step.transitions.Add(transition);
-
-            }
-
-            quest.steps.Add(step.name, step);
-        }
-        */
-        quest.startStep = quest.steps[text[3]];
+    
+    public static Quest LoadQuestFromJSON(string filePath) {
+        // Debug.Log(filePath);
+        Quest quest = JsonUtility.FromJson<Quest>(Resources.Load<TextAsset>(filePath).text);
+        quest.Initialize();
         return quest;
-    }
+    } 
 
 
     public override string ToString() {
@@ -171,6 +80,10 @@ public class Quest {
         s += name + "\t" + description + "\n";
         s += startStep.ToString();
         return s;
+    }
+
+    public void SetCurrentStep(string s) {
+        currentStep = steps[s];
     }
 }
 
@@ -196,12 +109,12 @@ public class QuestStep {
         transitions = new List<QuestTransition>();
     }
 
-    public QuestStep CheckTransition() {
+    public string CheckTransition() {
         foreach (QuestTransition transition in transitions) {
             if (transition.CheckReqs()) return transition.endQuest;
         }
 
-        return this;
+        return null;
     }
 
     public override string ToString() {
@@ -217,39 +130,43 @@ public class QuestStep {
 
 [Serializable]
 public class QuestTransition {
-    public QuestStep endQuest;
-    public Dictionary<string, int> requirements;
-    public Dictionary<string, int> removeItems;
-    public Dictionary<string, int> addItems;
+    public string endQuest;
+    public List<InventoryItem> requirements;
+    public List<InventoryItem> removeItems;
+    public List<InventoryItem> addItems;
 
 
     public QuestTransition() {
-        requirements = new Dictionary<string, int>();
-        removeItems = new Dictionary<string, int>();
-        addItems = new Dictionary<string, int>();
+        // requirements = new Dictionary<string, int>();
+        // removeItems = new Dictionary<string, int>();
+        // addItems = new Dictionary<string, int>();
     }
 
     public bool CheckReqs() {
-        foreach (KeyValuePair<string, int> req in requirements) {
-            if (!Inventory.HasValue(req.Key, req.Value)) {
+        foreach (InventoryItem req in requirements) {
+            if (!Inventory.HasValue(req.name, req.amount)) {
                 return false;
             }
         }
-
+        DoTransition();
         return true;
     }
 
     public void DoTransition() {
-        foreach (KeyValuePair<string, int> pair in removeItems) {
-            if (pair.Value > 0) Inventory.Discard(pair.Key, pair.Value);
+        foreach (InventoryItem item in removeItems) {
+            if (item.amount > 0) Inventory.Discard(item.name, item.amount);
             // else Inventory.Discard(pair.Key);
+        }
+
+        foreach (InventoryItem item in addItems) {
+            Inventory.PickUp(item.name, item.amount);
         }
     }
 
     public override string ToString() {
         string s = "";
-        foreach (KeyValuePair<string, int> keyValuePair in requirements) {
-            s += keyValuePair.Value + "\t" + keyValuePair.Key + "\n";
+        foreach (InventoryItem keyValuePair in requirements) {
+            s += keyValuePair.amount + "\t" + keyValuePair.name + "\n";
         }
 
         return s + ((endQuest == null) ? "" : endQuest.ToString());

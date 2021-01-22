@@ -14,7 +14,6 @@ public class NPCManager {
         foreach (string s in npcList) {
             NPC npc = NPC.LoadNPCFromJSON(Path.Combine(filePath, s));
             npcs.Add(npc.name, npc);
-            Debug.Log(npc);
         }
     }
 
