@@ -75,7 +75,7 @@ public class SlashController : AbilityController {
             body.MovePosition(chargePosition);
             if (isCharging) {
                 elapsedChargeTime += Time.deltaTime;
-                if (Input.GetButtonUp("Slash") || Input.GetAxis("Slash") < Constants.AXIS_SENSE) {
+                if (Input.GetButtonUp("Slash") || Input.GetAxis("Slash") < GameManager.Constants.AXIS_SENSE) {
                     if (elapsedChargeTime >= chargeTime) {
                         isCharged = true;
                         isCharging = false;
@@ -92,7 +92,7 @@ public class SlashController : AbilityController {
                     bodyPosition.y + center.y);
                 ;
                 int numHit = Physics2D.OverlapBoxNonAlloc(point, range, 0, objectsHit,
-                    GameManager.slashableLayerMask);
+                    GameManager.Constants.SLASHABLE_LAYERMASK);
                 for (int i = 0; i < numHit; i++) {
                     try {
                         objectsHit[i].GetComponent<ISlashable>().Slash(damage[movement.damageLevel], throwForce,
@@ -118,7 +118,7 @@ public class SlashController : AbilityController {
         
 
         if (movement.canAttack && timeSinceLastActivation >= timeBetweenActivations && 
-            (Input.GetButtonDown("Slash") || Input.GetAxisRaw("Slash") > Constants.AXIS_SENSE)) {
+            (Input.GetButtonDown("Slash") || Input.GetAxisRaw("Slash") > GameManager.Constants.AXIS_SENSE)) {
             if (movement.isInAir && upgradeLevel <= 2) return false;
             
             

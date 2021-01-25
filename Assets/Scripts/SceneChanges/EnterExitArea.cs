@@ -132,7 +132,7 @@ public class EnterExitArea : MonoBehaviour {
     }
 
     public void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag(Constants.PLAYER_TAG)) {
+        if (other.gameObject.CompareTag(GameManager.Constants.PLAYER_TAG)) {
             // print("collided");
             collider.enabled = false;
             StartCoroutine(Exit());

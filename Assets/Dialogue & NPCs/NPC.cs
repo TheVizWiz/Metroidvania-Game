@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 
 [Serializable]
-public class NPC{
+public class NPC {
 
     public string name;
     public string description;

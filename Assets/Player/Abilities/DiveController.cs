@@ -204,10 +204,10 @@ public class DiveController : AbilityController {
 
     public override void OnPlayerCollisionEnter2D(Collision2D collision) {
         if (isActive) {
-            if (collision.gameObject.layer == Constants.STANDABLE_LAYER) {
+            if (collision.gameObject.layer == GameManager.Constants.STANDABLE_LAYER) {
                 if (upgradeLevel >= 3) {
                     int numHit = Physics2D.OverlapBoxNonAlloc(body.position, areaBox, 0, enemiesHit,
-                        GameManager.enemyLayerMask);
+                        GameManager.Constants.DIVABLE_LAYERMASK);
 
                     for (int i = 0; i < numHit; i++) {
                         try {
@@ -219,7 +219,7 @@ public class DiveController : AbilityController {
                 }
 
                 Stop();
-            } else if (collision.gameObject.layer == Constants.ENEMY_LAYER) {
+            } else if (collision.gameObject.layer == GameManager.Constants.ENEMY_LAYER) {
                 if (movement.isInAir) {
                     if (upgradeLevel >= 2) {
                         collision.gameObject.GetComponent<Enemy>().Strike(directDamage, ElementType.Earth);

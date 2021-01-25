@@ -12,12 +12,12 @@ public class MovingPlatformPlayerController : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.collider.gameObject.layer == Constants.PLAYER_LAYER)
+        if (other.collider.gameObject.layer == GameManager.Constants.PLAYER_LAYER)
             GameManager.playerMovement.transform.parent = transform;
     }
 
     private void OnCollisionExit2D(Collision2D other) {
-        if (other.collider.gameObject.layer == Constants.PLAYER_LAYER) {
+        if (other.collider.gameObject.layer == GameManager.Constants.PLAYER_LAYER) {
             GameManager.playerMovement.transform.parent = null;
             DontDestroyOnLoad(GameManager.player);
         }

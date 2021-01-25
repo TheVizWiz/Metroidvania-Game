@@ -65,7 +65,7 @@ public class JumpController : AbilityController {
     }
 
     public override void OnPlayerCollisionEnter2D(Collision2D collision) {
-        if (isActive && collision.gameObject.layer == Constants.STANDABLE_LAYER) {
+        if (isActive && collision.gameObject.layer == GameManager.Constants.STANDABLE_LAYER) {
             hasJumped = false;
             Stop();
             elapsedTime = 0;

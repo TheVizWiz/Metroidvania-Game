@@ -62,13 +62,13 @@ public class DashController : AbilityController {
         if (isActive) {
             if (upgradeLevel >= 3) {
                 timeSinceLastExplosion += Time.deltaTime;
-                Physics2D.IgnoreLayerCollision(Constants.PLAYER_LAYER, Constants.ENEMY_LAYER);
+                Physics2D.IgnoreLayerCollision(GameManager.Constants.PLAYER_LAYER, GameManager.Constants.ENEMY_LAYER);
             }
             // print("ischarging = " + isCharging + ", ischarged = " + isCharged + ", isActive = " + isActive);
             //checking for explosions for upper tiers
             if (!exploded) {
                 if (movement.canAttack && Input.GetButton("Dash") && 
-                    (Input.GetButtonDown("Strike") || Input.GetAxisRaw("Strike") > Constants.AXIS_SENSE)) {
+                    (Input.GetButtonDown("Strike") || Input.GetAxisRaw("Strike") > GameManager.Constants.AXIS_SENSE)) {
                     if (((upgradeLevel == 4 || upgradeLevel == 3) &&
                          timeSinceLastExplosion >= level3timeBetweenExplosions) ||
                         (upgradeLevel == 5 && timeSinceLastExplosion >= level5TimeBetweenExplosions)) {
@@ -87,7 +87,7 @@ public class DashController : AbilityController {
             elapsedTime += Time.deltaTime;
             if (elapsedTime > dashTime) {
                 Stop();
-                Physics2D.IgnoreLayerCollision(Constants.PLAYER_LAYER, Constants.ENEMY_LAYER, false);
+                Physics2D.IgnoreLayerCollision(GameManager.Constants.PLAYER_LAYER, GameManager.Constants.ENEMY_LAYER, false);
             }
             
             
@@ -156,7 +156,7 @@ public class DashController : AbilityController {
 
         StartCoroutine(
             Explosion.CreateExplosion(position, explosionRadius, damage, ElementType.Dark, chainDamage,
-                GameManager.enemyLayerMask, waitTime));
+                GameManager.Constants.ENEMY_LAYERMASK, waitTime));
     }
 
     private void SetParticleEmissions(bool flag) {

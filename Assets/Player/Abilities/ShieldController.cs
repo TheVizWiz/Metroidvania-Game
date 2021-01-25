@@ -97,9 +97,9 @@ public class ShieldController : AbilityController {
         float vertical = Input.GetAxis("Vertical");
 
         if (Mathf.Abs(vertical) > horizontal) {
-            if (vertical < -Constants.INPUT_ERROR) direction = 3;
-            else if (vertical > Constants.INPUT_ERROR) direction = 1;
-        } else if (horizontal > Constants.INPUT_ERROR) {
+            if (vertical < -GameManager.Constants.INPUT_ERROR) direction = 3;
+            else if (vertical > GameManager.Constants.INPUT_ERROR) direction = 1;
+        } else if (horizontal > GameManager.Constants.INPUT_ERROR) {
             direction = 2;
         } else direction = 2; //classified input based on which is largest - that will be shielded direction.
 
@@ -134,7 +134,7 @@ public class ShieldController : AbilityController {
 
         }
 
-        if (!isBashing && movement.canAttack && Input.GetAxis("Strike") > Constants.AXIS_SENSE &&
+        if (!isBashing && movement.canAttack && Input.GetAxis("Strike") > GameManager.Constants.AXIS_SENSE &&
             upgradeLevel >= 2 && timeSinceLastBash > strengthBashDownTime && isActive
             && direction == 2 && !movement.isInAir) {
             isBashing = true;
@@ -143,7 +143,7 @@ public class ShieldController : AbilityController {
             elapsedTime = 0;
             return true;
         } else if (!isBashing && movement.canAttack && movement.canBashDownwards &&
-                   Input.GetAxis("Strike") > Constants.AXIS_SENSE &&
+                   Input.GetAxis("Strike") > GameManager.Constants.AXIS_SENSE &&
                    upgradeLevel >= 2 && timeSinceLastBash > strengthBashDownTime && isActive
                    && direction == 3 && movement.isInAir) {
             isBashing = true;
@@ -171,7 +171,7 @@ public class ShieldController : AbilityController {
     }
 
     public void OnShieldCollision(Collision2D other) {
-        if (other.gameObject.layer == Constants.ENEMY_LAYER) {
+        if (other.gameObject.layer == GameManager.Constants.ENEMY_LAYER) {
 
         }
 

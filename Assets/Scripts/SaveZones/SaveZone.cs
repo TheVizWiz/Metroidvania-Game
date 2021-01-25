@@ -16,7 +16,7 @@ public class SaveZone : MonoBehaviour {
     }
 
     public void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag(Constants.PLAYER_TAG)) {
+        if (other.CompareTag(GameManager.Constants.PLAYER_TAG)) {
             SaveZoneHandler.SetSafeZone(this);
         }
     }

@@ -66,7 +66,7 @@ public class StrikeController : AbilityController {
     private void Update() {
 
         if (axisPosition == 0) {
-            if (Input.GetAxis("Strike") > Constants.AXIS_SENSE) axisPosition = 1;
+            if (Input.GetAxis("Strike") > GameManager.Constants.AXIS_SENSE) axisPosition = 1;
         } else if (axisPosition == 1) {
             axisPosition++;
         } else if (axisPosition == 2) {
@@ -137,7 +137,7 @@ public class StrikeController : AbilityController {
             trails.SetActive(true);
 
             int numHit = Physics2D.OverlapCircleNonAlloc(body.position + new Vector2(center.x * movement.lookDirection, center.y), range, objectsHit,
-                GameManager.strikableLayerMask);
+                GameManager.Constants.STRIKABLE_LAYERMASK);
             
             for (int i = 0; i < numHit; i++) {
                 try {

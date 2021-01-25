@@ -18,7 +18,7 @@ public class CameraCollider : MonoBehaviour {
 
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.CompareTag(Constants.PLAYER_TAG)) {
+        if (other.gameObject.CompareTag(GameManager.Constants.PLAYER_TAG)) {
             GameManager.cameraController.SetCurrentCam(camera);
         }
         

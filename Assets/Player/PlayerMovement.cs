@@ -85,13 +85,13 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 
 		if (canMove && !isInUI) {
 			float hInput = Input.GetAxisRaw("Horizontal");
-			if (hInput > Constants.INPUT_ERROR) {
+			if (hInput > GameManager.Constants.INPUT_ERROR) {
 				if (horizontalInput != 1 && !isInAir) {
 					animator.SetBool(walkString, true);
 				}
 
 				horizontalInput = 1;
-			} else if (hInput < -Constants.INPUT_ERROR) {
+			} else if (hInput < -GameManager.Constants.INPUT_ERROR) {
 				if (horizontalInput != -1 && !isInAir) {
 					animator.SetBool(walkString, false);
 				}
@@ -144,7 +144,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 			timeSinceLastCarry += Time.deltaTime;
 
 			if (timeSinceLastCarry >= carryCooldown) {
-				Physics2D.IgnoreLayerCollision(Constants.PLAYER_LAYER, Constants.CARRYABLE_LAYER, false);
+				// Physics2D.IgnoreLayerCollision(GameManager.Constants.PLAYER_LAYER, GameManager.Constants.CARRYABLE_LAYER, false);
 			}
 		}
 	}
@@ -183,12 +183,13 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 		
 		ICarryable carryable = collision.collider.GetComponent<Ball>();
 		if (carryable != null) {
-			if (!isCarrying && timeSinceLastCarry >= carryCooldown) {
+			if (!isCarrying && timeSinceLastCarry >= carryCooldown && collision.collider.CompareTag(GameManager.Constants.CARRYABLE_TAG)) {
+				GameManager.Constants.LayerToLayerMask(1);
 				carryable.Pickup(transform, carryPosition);
 				isCarrying = true;
 				canAttack = false;
 				this.carryable = carryable;
-				Physics2D.IgnoreLayerCollision(Constants.PLAYER_LAYER, Constants.CARRYABLE_LAYER);
+				// Physics2D.IgnoreLayerCollision(GameManager.Constants.PLAYER_LAYER, GameManager.Constants.CARRYABLE_LAYER);
 
 			}
 		}
@@ -250,7 +251,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 
 	public void OnCollisionExit2D(Collision2D collision) {
 		if (collision.otherCollider == bottomCollider) {
-			if (collision.gameObject.layer == Constants.STANDABLE_LAYER) {
+			if (collision.gameObject.layer == GameManager.Constants.STANDABLE_LAYER) {
 				isInAir = true;
 				animator.SetBool(walkString, false);
 			}
@@ -260,7 +261,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 
 	public void OnCollisionStay2D(Collision2D collision) {
 		if (collision.otherCollider == bottomCollider) {
-			if (collision.gameObject.layer == Constants.STANDABLE_LAYER) {
+			if (collision.gameObject.CompareTag(GameManager.Constants.STANDABLE_TAG)) {
 				if (isInAir) {
 					isInAir = false;
 					animator.SetBool(fallString, false);

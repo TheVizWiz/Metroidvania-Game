@@ -67,7 +67,7 @@ public class Ball : MonoBehaviour, ICarryable {
     }
 
     private void OnCollisionStay2D(Collision2D other) {    
-        if (collider.gameObject.layer == Constants.PLAYER_LAYER) {
+        if (collider.gameObject.layer == GameManager.Constants.PLAYER_LAYER) {
             Physics2D.IgnoreCollision(collider, other.collider);
         }
     }
