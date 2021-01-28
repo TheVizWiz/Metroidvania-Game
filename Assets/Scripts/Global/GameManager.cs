@@ -19,6 +19,7 @@ public class GameManager {
         
         
         public static readonly string STANDABLE_TAG = "Standable";
+        public static readonly string INSTANT_DAMAGE_TAG = "InstantDamage";
         public static readonly string ENEMY_TAG = "Enemy";
         public static string PLAYER_TAG = "Player";
         public static string CARRYABLE_TAG = "Carryable";

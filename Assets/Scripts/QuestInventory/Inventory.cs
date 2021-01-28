@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro.EditorUtilities;
 using UnityEditor.Presets;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 public static class Inventory {
@@ -15,9 +16,12 @@ public static class Inventory {
     private static string itemListPath = "ItemList";
     private static string PATH = "plinv";
 
+    public static UnityEvent changeEvent;
+
     public static void Initialize() {
         items = new Dictionary<string, InventoryItem>();
         saveObject = new SaveObject<InventoryItem>();
+        changeEvent = new UnityEvent();
     }
 
     public static void PickUp(string item, int amount) {
@@ -26,7 +30,7 @@ public static class Inventory {
         } else {
             items.Add(item, new InventoryItem(item, amount));
         }
-        QuestManager.UpdateQuests();
+        changeEvent.Invoke();
     }
 
     public static bool Discard(string item, int amount) {
@@ -35,9 +39,10 @@ public static class Inventory {
         if (inventoryItem.amount < amount) return false;
         if (inventoryItem.RemoveAmount(amount)) {
             items.Remove(item);
+            changeEvent.Invoke();
             return true;
         }
-
+        
         return false;
     }
 

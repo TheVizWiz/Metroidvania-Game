@@ -20,10 +20,10 @@ MonoBehaviour:
     m_Bits: 3072
   slashable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   carryable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   enemy:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024

@@ -48,7 +48,7 @@ namespace GeneralEnemyStates {
 
         public override void OnEnter() {
             isFinished = false;
-            Debug.Log("start pos: " + startPos + "\nend pos: " + endPos);
+            // Debug.Log("start pos: " + startPos + "\nend pos: " + endPos);
             enemy.transform.position = startPos;
             LeanTween.move(enemy.gameObject, endPos, moveTime).setEase(easeType)
                 .setOnComplete(o => isFinished = true);

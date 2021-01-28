@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
@@ -37,6 +38,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 
 	private float timeSinceLastCarry;
 	private ICarryable carryable;
+	private Vector3 lastSafePosition;
 
 	public static readonly string walkString = "Walk";
 	public static readonly string fallString = "Fall";
@@ -241,7 +243,26 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 		}
 	}
 
+	public IEnumerator BackToSaveZone() {
+		float time = 0.5f;
+		SetMobility(false);
+		GameManager.sceneAnimator.FadeOut(time);
+		Vector3 freezePos = transform.position;
+		float timeElapsed = 0;
+		while (timeElapsed < time) {
+			timeElapsed += Time.deltaTime;
+			transform.position = freezePos;
+			yield return null;
+		}
+		transform.position = lastSafePosition;
+		GameManager.sceneAnimator.FadeIn(time);
+		SetMobility(true);
+	} 
+
 	public void OnCollisionEnter2D(Collision2D collision) {
+		if (collision.gameObject.CompareTag(GameManager.Constants.INSTANT_DAMAGE_TAG)) {
+			StartCoroutine(BackToSaveZone());
+		}
 		if (collision.otherCollider == bottomCollider) {
 			foreach (AbilityController controller in abilities) controller.OnPlayerCollisionEnter2D(collision);
 		}
@@ -262,6 +283,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
 	public void OnCollisionStay2D(Collision2D collision) {
 		if (collision.otherCollider == bottomCollider) {
 			if (collision.gameObject.CompareTag(GameManager.Constants.STANDABLE_TAG)) {
+				lastSafePosition = transform.position;
 				if (isInAir) {
 					isInAir = false;
 					animator.SetBool(fallString, false);

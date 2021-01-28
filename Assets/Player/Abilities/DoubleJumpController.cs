@@ -17,6 +17,7 @@ public class DoubleJumpController : AbilityController {
 
     // CheckDone is called once per frame
     private void Update() {
+        Vector3.MoveTowards(transform.position, transform.position, 1);
         if (!movement.canMove) {
             Stop();
         }
@@ -64,7 +65,7 @@ public class DoubleJumpController : AbilityController {
     }
 
     public override void OnPlayerCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.layer == GameManager.Constants.STANDABLE_LAYER) {
+        if (collision.gameObject.CompareTag(GameManager.Constants.STANDABLE_TAG)) {
             hasJumped = false;
             Stop();
         }

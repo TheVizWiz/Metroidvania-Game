@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SceneAnimator : MonoBehaviour {
 
     [SerializeField] private Image image;
-    [SerializeField] private float time;
+    [SerializeField] public float time;
     
     
     private Animator animator;
@@ -16,11 +16,7 @@ public class SceneAnimator : MonoBehaviour {
     void Awake() {
         GameManager.sceneAnimator = this;
         isTweening = false;
-        // EnterScene();
-    }
-
-    private void StopTween() {
-        isTweening = false;
+        // FadeIn();
     }
 
     public bool IsTweening() {
@@ -34,7 +30,7 @@ public class SceneAnimator : MonoBehaviour {
             color.a = val;
             ;
             image.color = color;
-        }).setOnComplete(StopTween).setEaseInOutSine();
+        }).setOnComplete(() => isTweening = false).setEaseInOutSine();
     }
 
     public void ExitScene() {
@@ -44,6 +40,26 @@ public class SceneAnimator : MonoBehaviour {
             color.a = val;
             ;
             image.color = color;
-        }).setOnComplete(StopTween).setEaseInOutSine();
+        }).setOnComplete(() => isTweening = false).setEaseInOutSine();
+    }
+    
+    public void FadeIn(float time) {
+        isTweening = true;
+        LeanTween.value(image.gameObject, 1, 0, time).setOnUpdate((float val) => {
+            Color color = image.color;
+            color.a = val;
+            ;
+            image.color = color;
+        }).setOnComplete(() => isTweening = false).setEaseInOutSine();
+    }
+
+    public void FadeOut(float time) {
+        isTweening = true;
+        LeanTween.value(image.gameObject, 0, 1, time).setOnUpdate((float val) => {
+            Color color = image.color;
+            color.a = val;
+            ;
+            image.color = color;
+        }).setOnComplete(() => isTweening = false).setEaseInOutSine();
     }
 }

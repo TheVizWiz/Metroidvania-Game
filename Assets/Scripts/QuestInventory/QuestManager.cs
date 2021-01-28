@@ -28,6 +28,8 @@ public class QuestManager {
                 quest.Value.currentStep = quest.Value.startStep;
             }
         }
+
+        Inventory.changeEvent.AddListener(UpdateQuests);
     }
 
 

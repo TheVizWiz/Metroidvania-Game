@@ -18,8 +18,8 @@ public class LevelManager : MonoBehaviour {
 
     void Awake() {
         if (!GameManager.isInitialized) {
-            QuestManager.Initialize();
             Inventory.Initialize();
+            QuestManager.Initialize();
             SaveManager.Initialize();
             NPCManager.Initialize();
             GameManager.isInitialized = true;
