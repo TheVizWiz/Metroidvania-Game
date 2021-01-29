@@ -36,7 +36,7 @@ public class DashController : AbilityController {
     private float explosionDistance;
     private float timeSinceLastExplosion;
     private bool exploded;
-
+    private static readonly int dashString = Animator.StringToHash("Dash");
 
 
     // Start is called before the first frame update
@@ -122,6 +122,7 @@ public class DashController : AbilityController {
                 elapsedTime = 0;
                 SetTrailEmissions(true);
                 SetParticleEmissions(true);
+                animator.SetTrigger(dashString);
                 movement.canMove = false;
                 movement.canTurn = false;
                 dashPosition = body.position;

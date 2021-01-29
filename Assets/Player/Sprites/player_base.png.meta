@@ -5,6 +5,36 @@ TextureImporter:
   - first:
       213: -8287935456933786553
     second: player_base_0
+  - first:
+      213: 3866117467677955848
+    second: player_dash_1
+  - first:
+      213: 742276709968896013
+    second: player_dash_2
+  - first:
+      213: 2213339384888254519
+    second: player_dash_3
+  - first:
+      213: 443989624464404073
+    second: player_dash_4
+  - first:
+      213: 7835569814088645492
+    second: player_dash_5
+  - first:
+      213: -7508537363356540265
+    second: player_dash_6
+  - first:
+      213: 6287718734561042528
+    second: player_dash_7
+  - first:
+      213: -7632389623232723635
+    second: player_dash_8
+  - first:
+      213: 321765468356241422
+    second: player_dash_9
+  - first:
+      213: 3006215065083202414
+    second: player_dash_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -98,11 +128,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 7200
-        width: 800
-        height: 800
+        y: 7400
+        width: 600
+        height: 600
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -110,6 +140,216 @@ TextureImporter:
       bones: []
       spriteID: 74cc8100d965bfc80800000000000000
       internalID: -8287935456933786553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_1
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80790e07a5537a530800000000000000
+      internalID: 3866117467677955848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_2
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d00edb62cb81d4a00800000000000000
+      internalID: 742276709968896013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_3
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73065ab917c57be10800000000000000
+      internalID: 2213339384888254519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_4
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96ee82a063e592600800000000000000
+      internalID: 443989624464404073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_5
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47bf6853b398dbc60800000000000000
+      internalID: 7835569814088645492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_6
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 792a26acc015cc790800000000000000
+      internalID: -7508537363356540265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_7
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 060641510e6724750800000000000000
+      internalID: 6287718734561042528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_8
+      rect:
+        serializedVersion: 2
+        x: 4800
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4506d7631e441690800000000000000
+      internalID: -7632389623232723635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_9
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e086c5a1df3277400800000000000000
+      internalID: 321765468356241422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_10
+      rect:
+        serializedVersion: 2
+        x: 6000
+        y: 7400
+        width: 600
+        height: 600
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6b46b09ca838b920800000000000000
+      internalID: 3006215065083202414
       vertices: []
       indices: 
       edges: []
