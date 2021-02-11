@@ -2,10 +2,10 @@
 using UnityEngine.Serialization;
 
 public class DoubleJumpController : AbilityController {
-
     private bool hasJumped;
 
     [SerializeField] private float jumpVelocity;
+
     [SerializeField] private float maxTime;
     // Start is called before the first frame update
 
@@ -13,6 +13,11 @@ public class DoubleJumpController : AbilityController {
         Setup();
         fileString = "doubleJumpController";
         animString = "DoubleJump";
+        input.Player.Jump.started += context => {
+            if (movement.isInAir) 
+                isPressed = true;
+        };
+        input.Player.Jump.canceled += context => { isPressed = false; };
     }
 
     // CheckDone is called once per frame
@@ -21,17 +26,17 @@ public class DoubleJumpController : AbilityController {
         if (!movement.canMove) {
             Stop();
         }
+
         if (isActive) {
             if (movement.isInUI) {
                 Stop();
             }
-            if (Input.GetButton("Jump") && elapsedTime < maxTime) {
+
+            if (isPressed && elapsedTime < maxTime) {
                 elapsedTime += Time.deltaTime;
                 // body.AddForce(Physics2D.gravity * (-1 * body.gravityScale));
                 body.velocity = Vector2.up * jumpVelocity;
-            }
-
-            else if (Input.GetButtonUp("Jump")) {
+            } else if (!isPressed) {
                 Stop();
             }
 
@@ -41,12 +46,10 @@ public class DoubleJumpController : AbilityController {
                 elapsedTime = 0;
             }
         }
-
-
     }
 
     public override bool Activate() {
-        if (!hasJumped && movement.isInAir && upgradeLevel > 0 && Input.GetButtonDown("Jump")) {
+        if (!hasJumped && movement.isInAir && upgradeLevel > 0 && isPressed) {
             hasJumped = true;
             isActive = true;
             elapsedTime = 0;
@@ -54,11 +57,13 @@ public class DoubleJumpController : AbilityController {
             // body.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             return true;
         }
+
         return false;
     }
 
     public override bool Stop() {
         isActive = false;
+        isPressed = false;
         body.velocity = new Vector2(body.velocity.x, 0);
         animator.SetBool(PlayerMovement.doubleJumpString, false);
         return true;

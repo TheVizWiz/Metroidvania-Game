@@ -5,7 +5,9 @@
   "dialogues": [
     {
       "lines": [
-        "abcdefg", "this is the second line", "this is the third line"
+        "abcdefg",
+        "this is the second line",
+        "this is the third line"
       ],
       "requirements": [
         {
@@ -15,29 +17,45 @@
       ],
       "options": [
         {
-          "displayString" : "This is the first option",
-          "pickStrings" : [
-            "thank you for picking this option", "this seems to be working quite well."
+          "displayString": "This is the first option",
+          "pickStrings": [
+            "thank you for picking this option",
+            "this seems to be working quite well."
           ],
           "additionItems": [
             {
-              "name" : "mayasecondstep",
-              "amount" : 1
+              "name": "mayasecondstep",
+              "amount": 1
             }
           ],
           "removeItems": [
             {
-              "name" : "mayastepstarter",
-              "amount" : 1
+              "name": "mayastepstarter",
+              "amount": 1
+            }
+          ]
+        },
+        {
+          "displayString": "Second option",
+          "pickStrings": [
+            "This is the second option",
+            "this is all",
+            "end quote."
+          ],
+          "additionItems": [
+            {
+              "name": "mayasecondstep",
+              "amount": 1
+            }
+          ],
+          "removeItems": [
+            {
+              "name": "mayastepstarter",
+              "amount": 1
             }
           ]
         }
       ]
-    },
-    {
-      "lines": [],
-      "requirements": [],
-      "options": []
     }
   ]
 }

@@ -2,31 +2,26 @@
 using UnityEngine;
 
 public class DashController : AbilityController {
-
     [SerializeField] private ParticleSystem[] particles;
+
     // private ParticleSystem.EmissionModule emissionModule;
     [SerializeField] private TrailRenderer[] trails;
     [SerializeField] private float dashTime;
 
-    [Header("Level 1")] 
-    [SerializeField] private float distance;
+    [Header("Level 1")] [SerializeField] private float distance;
     [SerializeField] private float level1TimeBetweenActivations;
 
-    [Header("Level 2")] 
-    [SerializeField] private float level2TimeBetweenActivations;
+    [Header("Level 2")] [SerializeField] private float level2TimeBetweenActivations;
 
-    [Header("Level 3")] 
-    [SerializeField] private float level3timeBetweenExplosions;
+    [Header("Level 3")] [SerializeField] private float level3timeBetweenExplosions;
     [SerializeField] private float level3EnemyDamage;
     [SerializeField] private float level3ChargeTime;
     [SerializeField] private float level3ExplosionRadius;
 
-    [Header("Level 4")] 
-    [SerializeField] private float level4EnemyDamage;
+    [Header("Level 4")] [SerializeField] private float level4EnemyDamage;
     [SerializeField] private float level4ExplosionRadius;
 
-    [Header("Level 5")]
-    [SerializeField] private float dazeTimer;
+    [Header("Level 5")] [SerializeField] private float dazeTimer;
     [SerializeField] private float level5TimeBetweenActivations;
     [SerializeField] private float level5TimeBetweenExplosions;
 
@@ -36,11 +31,12 @@ public class DashController : AbilityController {
     private float explosionDistance;
     private float timeSinceLastExplosion;
     private bool exploded;
+    private bool strikePressed;
     private static readonly int dashString = Animator.StringToHash("Dash");
 
 
     // Start is called before the first frame update
-    private void Start() {   
+    private void Start() {
         Setup();
         fileString = "dashController";
         // emissionModule = particles.emission;
@@ -50,9 +46,17 @@ public class DashController : AbilityController {
         exploded = false;
         isCharging = false;
         isCharged = false;
-        explodedHitEnemyColliders = new Collider2D[]{};
+        explodedHitEnemyColliders = new Collider2D[] { };
         SetParticleEmissions(false);
         SetTrailEmissions(false);
+        input.Player.Dash.started += context => {
+            if (!isActive) isPressed = true;
+        };
+        input.Player.Dash.canceled += context => { isPressed = false; };
+        input.Player.Strike.started += context => {
+            if (isActive) strikePressed = true;
+        };
+        input.Player.Strike.canceled += context => { strikePressed = false; };
         // trail.emitting = false;
         // emissionModule.enabled = false;u
     }
@@ -64,11 +68,11 @@ public class DashController : AbilityController {
                 timeSinceLastExplosion += Time.deltaTime;
                 Physics2D.IgnoreLayerCollision(GameManager.Constants.PLAYER_LAYER, GameManager.Constants.ENEMY_LAYER);
             }
+
             // print("ischarging = " + isCharging + ", ischarged = " + isCharged + ", isActive = " + isActive);
             //checking for explosions for upper tiers
             if (!exploded) {
-                if (movement.canAttack && Input.GetButton("Dash") && 
-                    (Input.GetButtonDown("Strike") || Input.GetAxisRaw("Strike") > GameManager.Constants.AXIS_SENSE)) {
+                if (movement.canAttack && isPressed && strikePressed) {
                     if (((upgradeLevel == 4 || upgradeLevel == 3) &&
                          timeSinceLastExplosion >= level3timeBetweenExplosions) ||
                         (upgradeLevel == 5 && timeSinceLastExplosion >= level5TimeBetweenExplosions)) {
@@ -87,10 +91,9 @@ public class DashController : AbilityController {
             elapsedTime += Time.deltaTime;
             if (elapsedTime > dashTime) {
                 Stop();
-                Physics2D.IgnoreLayerCollision(GameManager.Constants.PLAYER_LAYER, GameManager.Constants.ENEMY_LAYER, false);
+                Physics2D.IgnoreLayerCollision(GameManager.Constants.PLAYER_LAYER, GameManager.Constants.ENEMY_LAYER,
+                    false);
             }
-            
-            
         } else {
             timeSinceLastActivation += Time.deltaTime;
             timeSinceLastExplosion += Time.deltaTime;
@@ -102,14 +105,15 @@ public class DashController : AbilityController {
         if (movement.isInUI) return false;
 
         bool willActivate = false;
-        if (!isActive && movement.canMove && Input.GetButtonDown("Dash")) {
+        if (!isActive && movement.canMove && isPressed) {
             if (upgradeLevel == 0) {
                 return false;
             } else if (upgradeLevel == 1 && timeSinceLastActivation >= level1TimeBetweenActivations) {
                 willActivate = true;
                 isCharging = false;
                 isCharged = false;
-            } else if (upgradeLevel < 5 && upgradeLevel > 1 && timeSinceLastActivation >= level2TimeBetweenActivations) {
+            } else if (upgradeLevel < 5 && upgradeLevel > 1 &&
+                       timeSinceLastActivation >= level2TimeBetweenActivations) {
                 willActivate = true;
                 isCharging = upgradeLevel > 2;
             } else if (upgradeLevel == 5 && timeSinceLastActivation >= level5TimeBetweenActivations) {

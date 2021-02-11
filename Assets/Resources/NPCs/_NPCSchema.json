@@ -5,6 +5,7 @@
     "autoDeclineMessage",
     "dialogues"
   ],
+  
   "properties": {
     "name": {
       "type": "string"

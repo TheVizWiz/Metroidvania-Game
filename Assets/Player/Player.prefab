@@ -265,7 +265,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3358286323745006397}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1811643910312325485}
@@ -5607,7 +5607,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6696926251764076757}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6696926250930625506
 MonoBehaviour:
@@ -5710,8 +5710,8 @@ MonoBehaviour:
   - {fileID: 2414513849139016352}
   trails:
   - {fileID: 5226273141201039262}
-  dashTime: 0.3
-  distance: 5
+  dashTime: 0.2
+  distance: 7.5
   level1TimeBetweenActivations: 5
   level2TimeBetweenActivations: 0.5
   level3timeBetweenExplosions: 0.67
@@ -5900,8 +5900,8 @@ Transform:
   - {fileID: 6696926251232789148}
   - {fileID: 6696926252447097533}
   - {fileID: 6696926253009982941}
-  - {fileID: 6696926250930625505}
   - {fileID: 6696926252833376575}
+  - {fileID: 6696926250930625505}
   - {fileID: 6696926251778324553}
   m_Father: {fileID: 6696926252075481730}
   m_RootOrder: 2
@@ -11044,10 +11044,9 @@ MonoBehaviour:
   abilities:
   - {fileID: 6696926251745759383}
   - {fileID: 6696926251232789149}
-  - {fileID: 6696926252447097534}
   - {fileID: 6696926253009982942}
-  - {fileID: 6696926250930625506}
   - {fileID: 6696926252833376568}
+  - {fileID: 6696926250930625506}
   - {fileID: 6696926251778324552}
   main: {fileID: 0}
   canAttack: 1
@@ -11621,7 +11620,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6696926251764076757}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6696926252833376568
 MonoBehaviour:
@@ -17132,8 +17131,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8507064538968440578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.24, y: -3.67, z: 0}
-  m_LocalScale: {x: 3.454171, y: 3.454171, z: 3.454171}
+  m_LocalPosition: {x: 0.68, y: -2.32, z: 0}
+  m_LocalScale: {x: 3.1289954, y: 3.1289954, z: 3.1289954}
   m_Children: []
   m_Father: {fileID: 6696926252075481730}
   m_RootOrder: 0
@@ -17157,7 +17156,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ebd1e96835fd07f42a981adfd95b48b8, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27644,7 +27643,7 @@ PrefabInstance:
     - target: {fileID: 3975685822993358906, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 426.64258
+      value: 426.64062
       objectReference: {fileID: 0}
     - target: {fileID: 3975685822993358906, guid: 4d9342aa85d01f14e83b9a7d84a214ce,
         type: 3}

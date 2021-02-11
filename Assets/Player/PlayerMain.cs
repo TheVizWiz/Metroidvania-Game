@@ -39,15 +39,6 @@ public class PlayerMain : MonoBehaviour {
     }
     
     public void Update() {
-        if (Input.GetKeyDown(KeyCode.Keypad1)) {
-            Damage(10);
-        } else if (Input.GetKeyDown(KeyCode.Keypad2)) {
-            UseMana(10);
-        } else if (Input.GetKeyDown(KeyCode.Keypad4)) {
-            AddHealth(10);
-        } else if (Input.GetKeyDown(KeyCode.Keypad5)) {
-            AddMana(10);
-        }    
     }
 
     public bool UseMana(float amount) {        

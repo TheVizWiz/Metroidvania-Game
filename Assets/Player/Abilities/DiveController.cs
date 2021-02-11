@@ -3,34 +3,37 @@ using System.Collections;
 using UnityEngine;
 
 public class DiveController : AbilityController {
-
     [Header("Level 1")] //UG1 variables
-    [SerializeField] private float level1ManaCost;
+    [SerializeField]
+    private float level1ManaCost;
+
     [SerializeField] private float level1ChargeTime;
     [SerializeField] private float level1Speed;
     [SerializeField] private float level1DirectDamage;
 
     [Header("Level 2")] //UG2 variables
-    [SerializeField] private float level2DirectDamage;
+    [SerializeField]
+    private float level2DirectDamage;
 
     [Header("Level 3")] //UG3 variables
-    [SerializeField] private float level3AreaDamage;
+    [SerializeField]
+    private float level3AreaDamage;
+
     [SerializeField] private Vector2 level3AreaBox;
 
     [Header("Level 4")] //UG5 variables -> exotic level
-    [SerializeField] private float level4ManaCost;
+    [SerializeField]
+    private float level4ManaCost;
+
     [SerializeField] private float level4Speed;
     //no charge time
 
-    [Header("Level 6")]
-    [SerializeField] private float level6DirectDamage;
+    [Header("Level 6")] [SerializeField] private float level6DirectDamage;
     [SerializeField] private float level6AreaDamage;
 
-    [Header("Level 7")] 
-    [SerializeField] private float level7DazeAmount;
+    [Header("Level 7")] [SerializeField] private float level7DazeAmount;
 
-    [Header("Level 8")]
-    [SerializeField] private float level8ManaPerSecond;
+    [Header("Level 8")] [SerializeField] private float level8ManaPerSecond;
     [SerializeField] private float level8DazeAmount;
     [SerializeField] private float level8ManaCost;
     [SerializeField] private float level8StoppingForce;
@@ -44,7 +47,9 @@ public class DiveController : AbilityController {
     private Vector2 areaBox;
     private Vector2 tempPosition;
     private Collider2D[] enemiesHit;
-    
+
+    private bool jumpPressed;
+
 
     // Start is called before the first frame update
     private void Start() {
@@ -53,6 +58,15 @@ public class DiveController : AbilityController {
         isCharged = false;
         isStopping = false;
         enemiesHit = new Collider2D[100];
+        input.Player.Dive.started += context => { isPressed = true; };
+        input.Player.Dive.canceled += context => {
+            isPressed = false; 
+            
+        };
+        input.Player.Jump.started += context => {
+            if (isActive) jumpPressed = true;
+        };
+        input.Player.Jump.canceled += context => { jumpPressed = false; };
     }
 
     // CheckDone is called once per frame
@@ -61,14 +75,15 @@ public class DiveController : AbilityController {
             if (movement.isInUI) {
                 isCharged = false;
                 isCharging = false;
-                
             }
+
             if (isCharging) {
                 elapsedChargeTime += Time.deltaTime;
                 body.MovePosition(tempPosition);
                 if (elapsedChargeTime >= chargeTime) {
                 }
-                if (Input.GetButtonUp("Dive")) {
+
+                if (!isPressed) {
                     if (elapsedChargeTime >= chargeTime) {
                         isCharging = false;
                         isCharged = true;
@@ -86,7 +101,7 @@ public class DiveController : AbilityController {
                 }
             }
 
-            if (!isStopping && upgradeLevel >= 8 && Input.GetButtonDown("Jump") && !movement.isInUI) {
+            if (!isStopping && upgradeLevel >= 8 && jumpPressed && !movement.isInUI) {
                 isStopping = true;
                 tempPosition = body.position;
                 // Stop();
@@ -110,10 +125,7 @@ public class DiveController : AbilityController {
     public override bool Activate() {
         if (isActive) {
             return true;
-            
-        }
-        else if (upgradeLevel > 0 && movement.isInAir && movement.canMove && Input.GetButtonDown("Dive")) {
-            
+        } else if (upgradeLevel > 0 && movement.isInAir && movement.canMove && isPressed) {
             //charge time block
             if (upgradeLevel >= 4) {
                 chargeTime = 0;
@@ -133,20 +145,20 @@ public class DiveController : AbilityController {
                 manaCost = level4ManaCost;
             else
                 manaCost = level1ManaCost;
-            
-            
+
+
             //mana return block
             if (upgradeLevel >= 8)
                 manaReturnSpeed = level8ManaPerSecond;
             else
                 manaReturnSpeed = 0;
-            
+
             //drop speed block
             if (upgradeLevel >= 4)
                 speed = level4Speed;
             else
                 speed = level1Speed;
-            
+
             //direct damage block
             if (upgradeLevel >= 6)
                 directDamage = level6DirectDamage;
@@ -162,7 +174,7 @@ public class DiveController : AbilityController {
                 areaDamage = level3AreaDamage;
             else
                 areaDamage = 0;
-            
+
             //area areaBox block
             if (upgradeLevel >= 8)
                 areaBox = level8AreaBox;
@@ -170,7 +182,7 @@ public class DiveController : AbilityController {
                 areaBox = level3AreaBox;
             else
                 areaBox = Vector2.zero;
-            
+
             //daze amount block
             if (upgradeLevel >= 8)
                 dazeAmount = level8DazeAmount;

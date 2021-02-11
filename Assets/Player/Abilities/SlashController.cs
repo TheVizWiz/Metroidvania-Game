@@ -62,6 +62,13 @@ public class SlashController : AbilityController {
         fileString = "slashController";
         objectsHit = new Collider2D[100];
         slashAnimator = GetComponent<Animator>();
+        input.Player.Slash.started += context => {
+            isPressed = true;
+        };
+
+        input.Player.Slash.canceled += context => {
+            isPressed = false;
+        };
     }
 
     // CheckDone is called once per frame
@@ -75,7 +82,7 @@ public class SlashController : AbilityController {
             body.MovePosition(chargePosition);
             if (isCharging) {
                 elapsedChargeTime += Time.deltaTime;
-                if (Input.GetButtonUp("Slash") || Input.GetAxis("Slash") < GameManager.Constants.AXIS_SENSE) {
+                if (!isPressed) {
                     if (elapsedChargeTime >= chargeTime) {
                         isCharged = true;
                         isCharging = false;
@@ -118,7 +125,7 @@ public class SlashController : AbilityController {
         
 
         if (movement.canAttack && timeSinceLastActivation >= timeBetweenActivations && 
-            (Input.GetButtonDown("Slash") || Input.GetAxisRaw("Slash") > GameManager.Constants.AXIS_SENSE)) {
+            isPressed) {
             if (movement.isInAir && upgradeLevel <= 2) return false;
             
             
@@ -211,6 +218,7 @@ public class SlashController : AbilityController {
 
     public override bool Stop() {
         isActive = false;
+        isPressed = false;
         movement.canMove = true;
         movement.canTurn = true;
         return true;

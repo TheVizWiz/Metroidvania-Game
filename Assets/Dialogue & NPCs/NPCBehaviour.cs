@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Interfaces;
 using UnityEngine;
 
-public class NPCBehaviour : MonoBehaviour {
+public class NPCBehaviour : MonoBehaviour, IInteractable {
 
     public string name;
     [SerializeField] public Collider2D areaCollider;
@@ -17,11 +18,23 @@ public class NPCBehaviour : MonoBehaviour {
         if (npc.ActivateDialogue() != null) {
             GameManager.dialogueManager.SetNPC(npc);
             GameManager.playerMovement.canInteract = true;
+            GameManager.playerMovement.interactable = this;
         } else {
             GameManager.dialogueManager.SetNPC(null);
             GameManager.playerMovement.canInteract = false;
+            GameManager.playerMovement.interactable = null;
+            GameManager.playerMovement.input.Player.Enable();
         }
         
+    }
+
+    public void Interact() {
+        if (GameManager.dialogueManager.currentPosition == DialogueManagerPosition.HiddenPosition) {
+            GameManager.dialogueManager.Show();
+            // GameManager.playerMovement.input.Player.Disable();
+        } else {
+            GameManager.dialogueManager.Interact();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -32,7 +45,7 @@ public class NPCBehaviour : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.gameObject.CompareTag(GameManager.Constants.PLAYER_TAG)) {
+        if (other.gameObject.CompareTag(GameManager.Constants.PLAYER_TAG) && GameManager.dialogueManager.currentPosition == DialogueManagerPosition.HiddenPosition) {
             GameManager.playerMovement.canInteract = false;
             GameManager.dialogueManager.hideEvent.RemoveListener(RestartNPC);
         }

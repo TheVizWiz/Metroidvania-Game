@@ -17,7 +17,10 @@ public abstract class AbilityController : MonoBehaviour {
     protected bool isCharged;
     protected bool isCharging;
     protected string animString;
+    protected bool isPressed;
+    
     [HideInInspector] public string fileString;
+    [HideInInspector] public PlayerInput input;
 
 
     [SerializeField] protected int upgradeLevel;

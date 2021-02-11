@@ -44,6 +44,10 @@ namespace Interfaces {
 
         void Hide();
     }
+
+    public interface IInteractable {
+        public void Interact();
+    }
     
 
 }

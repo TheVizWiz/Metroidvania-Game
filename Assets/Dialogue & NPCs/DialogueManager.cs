@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityEditor;
 #endif
 
-public class DialogueManager : MonoBehaviour, IAnimatedUI {
+public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
     // Start is called before the first frame update
     [SerializeField] public CanvasGroup canvasGroup;
     public RectTransform transform;
@@ -46,8 +46,6 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
         if (fadeIn) {
             canvasGroup.alpha = 0;
         }
-
-        
     }
 
     // Update is called once per frame
@@ -57,20 +55,11 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
             waitToUpdatePlayerUI = false;
             GameManager.playerMovement.isInUI = false;
         }
-        if (Input.GetKeyDown(KeyCode.Keypad7)) {
-            Show();
-        } else if (Input.GetKeyDown(KeyCode.Keypad8)) {
-            Hide();
-        }
 
         if (pauseUpdate) {
             pauseUpdate = false;
-        } else if (Input.GetButtonDown("Interact") && 
-                   currentPosition == DialogueManagerPosition.ShownPosition ) {
-            
-            
-            pressedInteract = true;
-
+        } else if (pressedInteract && currentPosition == DialogueManagerPosition.ShownPosition ) {
+            pressedInteract = false;
             if (!passedOption) {
                 if (activeDialogue != null && activeDialogue.HasNextLine() && !isAnimatingText) {
                     StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0));
@@ -84,12 +73,7 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
                     pressedInteract = false;
                 }
             }
-
-        } else if (Input.GetButtonUp("Interact")) {
-            pressedInteract = false;
         }
-        
-        
     }
 
     public void Show() {
@@ -108,7 +92,6 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
                 StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0.5f));
             }
         }
-
     }
     public void Hide() {
         if (MovePosition(DialogueManagerPosition.HiddenPosition)) {
@@ -191,7 +174,12 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
     }
 
 
+    public void Interact() {
+        pressedInteract = true;
+    }
+
     private void ChooseOption(TextMeshProUGUI textMeshProUgui) {
+        print("chose an option");
         if (!activeDialogue.EndDialogue(textMeshProUgui.text)) {
             HideOptions(false);
             return;
@@ -239,14 +227,15 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI {
         pauseUpdate = true;
 
     }
+
     public DialogueManagerPosition CurrentPosition {
         get => currentPosition;
         set => currentPosition = value;
     }
 
 
-
     public Vector2 HidePosition => hidePosition;
+
     public Vector2 ShowPosition => showPosition;
 }
 

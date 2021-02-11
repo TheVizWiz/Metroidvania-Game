@@ -7,13 +7,13 @@ TextureImporter:
     second: player_base_0
   - first:
       213: 3866117467677955848
-    second: player_dash_1
+    second: player_base_1
   - first:
       213: 742276709968896013
-    second: player_dash_2
+    second: player_base_2
   - first:
       213: 2213339384888254519
-    second: player_dash_3
+    second: player_base_3
   - first:
       213: 443989624464404073
     second: player_dash_4
@@ -128,9 +128,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 7400
-        width: 600
-        height: 600
+        y: 7500
+        width: 400
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,13 +145,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_dash_1
+      name: player_base_1
       rect:
         serializedVersion: 2
-        x: 600
-        y: 7400
-        width: 600
-        height: 600
+        x: 400
+        y: 7500
+        width: 400
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,13 +166,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_dash_2
+      name: player_base_2
       rect:
         serializedVersion: 2
-        x: 1200
-        y: 7400
-        width: 600
-        height: 600
+        x: 800
+        y: 7500
+        width: 400
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,13 +187,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: player_dash_3
+      name: player_base_3
       rect:
         serializedVersion: 2
-        x: 1800
-        y: 7400
-        width: 600
-        height: 600
+        x: 1200
+        y: 7500
+        width: 400
+        height: 500
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,153 +203,6 @@ TextureImporter:
       bones: []
       spriteID: 73065ab917c57be10800000000000000
       internalID: 2213339384888254519
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_dash_4
-      rect:
-        serializedVersion: 2
-        x: 2400
-        y: 7400
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96ee82a063e592600800000000000000
-      internalID: 443989624464404073
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_dash_5
-      rect:
-        serializedVersion: 2
-        x: 3000
-        y: 7400
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 47bf6853b398dbc60800000000000000
-      internalID: 7835569814088645492
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_dash_6
-      rect:
-        serializedVersion: 2
-        x: 3600
-        y: 7400
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 792a26acc015cc790800000000000000
-      internalID: -7508537363356540265
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_dash_7
-      rect:
-        serializedVersion: 2
-        x: 4200
-        y: 7400
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 060641510e6724750800000000000000
-      internalID: 6287718734561042528
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_dash_8
-      rect:
-        serializedVersion: 2
-        x: 4800
-        y: 7400
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d4506d7631e441690800000000000000
-      internalID: -7632389623232723635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_dash_9
-      rect:
-        serializedVersion: 2
-        x: 5400
-        y: 7400
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e086c5a1df3277400800000000000000
-      internalID: 321765468356241422
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: player_dash_10
-      rect:
-        serializedVersion: 2
-        x: 6000
-        y: 7400
-        width: 600
-        height: 600
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e6b46b09ca838b920800000000000000
-      internalID: 3006215065083202414
       vertices: []
       indices: 
       edges: []

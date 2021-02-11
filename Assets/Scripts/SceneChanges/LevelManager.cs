@@ -38,8 +38,5 @@ public class LevelManager : MonoBehaviour {
 
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.F1)) {
-            Inventory.PickUp("steps", 20);
-        }
     }
 }

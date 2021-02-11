@@ -46,8 +46,6 @@ public class StrikeController : AbilityController {
     private ParticleSystem.EmissionModule emissionModule;
     private float particlesTime;
 
-    private int axisPosition; // 0 = nothing, 1 = just hit, 2 = held down, 3 = just let go
-    
 
 
     // Start is called before the first frame update
@@ -60,38 +58,27 @@ public class StrikeController : AbilityController {
         trails.SetActive(false);
         emissionModule = leftOverParticles.emission;
         emissionModule.enabled = false;
+        input.Player.Strike.started += context => {
+            isPressed = true;
+        };
+        input.Player.Strike.canceled += context => {
+            isPressed = false;
+        };
     }
 
     // CheckDone is called once per frame
     private void Update() {
-
-        if (axisPosition == 0) {
-            if (Input.GetAxis("Strike") > GameManager.Constants.AXIS_SENSE) axisPosition = 1;
-        } else if (axisPosition == 1) {
-            axisPosition++;
-        } else if (axisPosition == 2) {
-            if (Mathf.Approximately(Input.GetAxis("Strike"), 0))
-                axisPosition++;
-        } else if (axisPosition == 3) {
-            axisPosition = 0;
-        }
-
         if (isActive) elapsedTime += Time.deltaTime;
         else timeSinceLastActivation += Time.deltaTime;
 
-        if (elapsedTime >= animationLength) Stop();
-
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            Upgrade();
-        }
+        if (isActive && elapsedTime >= animationLength) Stop();
     }
 
     public override bool Activate() {
         if (isActive) return true;
         
 
-        if (!movement.isCarrying && movement.canAttack && upgradeLevel > 0 && timeSinceLastActivation >= timeBetweenActivations && 
-            (Input.GetButtonDown("Strike") || axisPosition == 1)) {
+        if (!movement.isCarrying && movement.canAttack && upgradeLevel > 0 && timeSinceLastActivation >= timeBetweenActivations && isPressed) {
             
             //range block
             if (upgradeLevel >= 6) {
@@ -126,11 +113,11 @@ public class StrikeController : AbilityController {
             } else {
                 timeBetweenActivations = level1TimeBetweenActivations;
             }
-            
-            
-            timeSinceLastActivation = 0;
+
+
             animator.SetTrigger("Strike");
             movement.canTurn = false;
+            timeSinceLastActivation = 0;
             isActive = true;
             elapsedTime = 0;
             emissionModule.enabled = true;
@@ -155,6 +142,7 @@ public class StrikeController : AbilityController {
     public override bool Stop() {
         isActive = false;
         trails.SetActive(false);
+        isPressed = false;
         movement.canTurn = true;
         emissionModule.enabled = false;
         return true;
