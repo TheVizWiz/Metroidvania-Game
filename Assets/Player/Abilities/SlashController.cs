@@ -72,13 +72,8 @@ public class SlashController : AbilityController {
     }
 
     // CheckDone is called once per frame
-    private void Update() {
+    private void FixedUpdate() {
         if (isActive) {
-            if (movement.isInUI) {
-                isCharged = false;
-                isCharging = false;
-                Stop();
-            }
             body.MovePosition(chargePosition);
             if (isCharging) {
                 elapsedChargeTime += Time.deltaTime;

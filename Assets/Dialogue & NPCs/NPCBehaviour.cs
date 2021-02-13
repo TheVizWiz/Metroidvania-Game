@@ -29,12 +29,7 @@ public class NPCBehaviour : MonoBehaviour, IInteractable {
     }
 
     public void Interact() {
-        if (GameManager.dialogueManager.currentPosition == DialogueManagerPosition.HiddenPosition) {
-            GameManager.dialogueManager.Show();
-            // GameManager.playerMovement.input.Player.Disable();
-        } else {
-            GameManager.dialogueManager.Interact();
-        }
+GameManager.dialogueManager.Interact();
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

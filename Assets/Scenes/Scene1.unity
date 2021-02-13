@@ -1300,6 +1300,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Graphy]'
       objectReference: {fileID: 0}
+    - target: {fileID: 177638, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 11496292, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
       propertyPath: m_graphyMode
       value: 1
@@ -1527,7 +1531,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11480938, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
-    - {fileID: 11496292, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0abab5bb77339e4428787a870eb31bd3, type: 3}
 --- !u!1 &955311562
 GameObject:
@@ -1695,42 +1698,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1080166461 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7854387837726128659, guid: 4624c95762c513347bea702950626324,
-    type: 3}
-  m_PrefabInstance: {fileID: 5861169800882973852}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1080166463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1080166461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_ActionsAsset: {fileID: -944628639613478452, guid: 5efaab32cd5ccec4a9ec7ea1ccbef035,
-    type: 3}
-  m_PointAction: {fileID: 0}
-  m_MoveAction: {fileID: -5566537610560615232, guid: 5efaab32cd5ccec4a9ec7ea1ccbef035,
-    type: 3}
-  m_SubmitAction: {fileID: -1828594430553007693, guid: 5efaab32cd5ccec4a9ec7ea1ccbef035,
-    type: 3}
-  m_CancelAction: {fileID: 0}
-  m_LeftClickAction: {fileID: 0}
-  m_MiddleClickAction: {fileID: 0}
-  m_RightClickAction: {fileID: 0}
-  m_ScrollWheelAction: {fileID: 0}
-  m_TrackedDevicePositionAction: {fileID: 0}
-  m_TrackedDeviceOrientationAction: {fileID: 0}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
 --- !u!1 &1133389271
 GameObject:
   m_ObjectHideFlags: 0
@@ -4030,8 +3997,7 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -0.19995117
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2920326136698454928, guid: 4624c95762c513347bea702950626324, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4624c95762c513347bea702950626324, type: 3}
 --- !u!4 &5861169800882973853 stripped
 Transform:

@@ -21,14 +21,11 @@ public class DoubleJumpController : AbilityController {
     }
 
     // CheckDone is called once per frame
-    private void Update() {
-        Vector3.MoveTowards(transform.position, transform.position, 1);
-        if (!movement.canMove) {
-            Stop();
-        }
+    private void FixedUpdate() {
+        // Vector3.MoveTowards(transform.position, transform.position, 1);
 
         if (isActive) {
-            if (movement.isInUI) {
+            if (!movement.canMove) {
                 Stop();
             }
 

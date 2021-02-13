@@ -49,11 +49,12 @@ public abstract class AbilityController : MonoBehaviour {
         isActive = false;
         elapsedTime = 0;
         timeSinceLastActivation = 0;
-        body = player.GetComponent<Rigidbody2D>();
         animator = player.GetComponent<Animator>();
-        movement = player.GetComponent<PlayerMovement>();
-        main = player.GetComponent<PlayerMain>();
+        body = player.GetComponent<Rigidbody2D>();
+        movement = GameManager.playerMovement;
+        main = GameManager.playerMain;
         transform = player.transform;
+        input = movement.input;
     }
 
     public void Upgrade(int upgradeLevel) {

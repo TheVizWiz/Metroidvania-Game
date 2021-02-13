@@ -6,20 +6,6 @@ public class JumpController : AbilityController {
 
     [SerializeField] private float jumpVelocity;
     [SerializeField] private float maxTime;
-    
-    public override bool Activate() {
-        if (movement.isInUI) return false;
-        if (movement.canInteract) return false;
-        if (!hasJumped && !movement.isInAir && isPressed) {
-            hasJumped = true;
-            isActive = true;
-            elapsedTime = 0;
-            animator.SetBool(PlayerMovement.jumpString, true);
-            return true;
-        }
-
-        return false;
-    }
 
 
     // Start is called before the first frame update
@@ -35,11 +21,11 @@ public class JumpController : AbilityController {
             isPressed = false;
         };
     }
-    
-    
-    private void Update() {
+
+
+    private void FixedUpdate() {
         if (isActive) {
-            if (!movement.canMove || movement.isInUI) {
+            if (!movement.canMove) {
                 Stop();
             }
 
@@ -56,6 +42,19 @@ public class JumpController : AbilityController {
                 body.velocity = Vector2.up * jumpVelocity;
             }
         }
+    }
+
+    public override bool Activate() {
+        if (movement.canInteract) return false;
+        if (!hasJumped && !movement.isInAir && isPressed) {
+            hasJumped = true;
+            isActive = true;
+            elapsedTime = 0;
+            animator.SetBool(PlayerMovement.jumpString, true);
+            return true;
+        }
+
+        return false;
     }
 
     public override bool Stop() {

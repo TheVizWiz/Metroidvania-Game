@@ -5,9 +5,9 @@
   "dialogues": [
     {
       "lines": [
-        "abcdefg",
-        "this is the second line",
-        "this is the third line"
+        "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line",
+        "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line",
+        "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line"
       ],
       "requirements": [
         {
@@ -38,9 +38,9 @@
         {
           "displayString": "Second option",
           "pickStrings": [
-            "This is the second option",
-            "this is all",
-            "end quote."
+            "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line",
+            "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line",
+            "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line"
           ],
           "additionItems": [
             {

@@ -33,7 +33,6 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
     [HideInInspector] public bool canInteract;
     [HideInInspector] public bool isInAir;
     [HideInInspector] public bool isCarrying;
-    [HideInInspector] public bool isInUI;
     [HideInInspector] public bool canBashDownwards;
     [HideInInspector] public IInteractable interactable;
     [HideInInspector] public int lookDirection = 1;
@@ -59,10 +58,10 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
         isInAir = false;
         canBashDownwards = false;
         body = GetComponent<Rigidbody2D>();
+        main = GetComponent<PlayerMain>();
         canMove = true;
         canTurn = true;
         canAttack = true;
-        isInUI = false;
         input = new PlayerInput();
         input.Enable();
         if (GameManager.playerMovement == null) {
@@ -86,10 +85,6 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
             }
         };
 
-        foreach (AbilityController controller in abilities) {
-            controller.input = this.input;
-        }
-
         DontDestroyOnLoad(gameObject);
         // LoadLevels();
         upgradeLevels = new Dictionary<string, int>();
@@ -98,7 +93,7 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
     // CheckDone is called once per frame
     private void Update() {
 
-        if (canMove && !isInUI) {
+        if (canMove) {
             if (hInput > GameManager.Constants.INPUT_ERROR) {
                 if (horizontalInput != 1 && !isInAir) {
                     animator.SetBool(walkString, true);
@@ -121,15 +116,12 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
             } else if (horizontalInput != 0 && !animator.GetBool(walkString) && !isInAir) {
                 animator.SetBool(walkString, true);
             }
+
         }
 
         if (isInAir && !animator.GetBool(fallString)) {
             animator.SetBool(fallString, true);
             animator.SetTrigger("FallTrigger");
-        }
-
-        if (canMove && !isInUI) {
-            body.velocity = new Vector2((horizontalInput * moveSpeed), body.velocity.y);
         }
 
         if (canTurn) {
@@ -155,6 +147,12 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
                 // Physics2D.IgnoreLayerCollision(GameManager.Constants.PLAYER_LAYER, GameManager.Constants.CARRYABLE_LAYER, false);
             }
         }
+    }
+
+    private void FixedUpdate() {
+        if (canMove) 
+            body.velocity = new Vector2((horizontalInput * moveSpeed), body.velocity.y);
+
     }
 
     public void SetLookDirection(int direction) {
@@ -215,6 +213,10 @@ public class PlayerMovement : MonoBehaviour, ICarrier {
     /// <param name="flag">flag of what to set everything to</param>
     public void SetMobility(bool flag) {
         canTurn = canAttack = canMove = flag;
+    }
+
+    private void OnDestroy() {
+        input.Dispose();
     }
 
 

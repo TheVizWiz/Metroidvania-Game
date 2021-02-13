@@ -49,11 +49,8 @@ public class ShieldController : AbilityController {
     }
 
     // CheckDone is called once per frame
-    private void Update() {
+    private void FixedUpdate() {
         if (isActive) {
-            if (movement.isInUI) {
-                Stop();
-            }
             if (Input.GetButtonUp("Shield")) {
                 switch (direction) {
                     case 1:

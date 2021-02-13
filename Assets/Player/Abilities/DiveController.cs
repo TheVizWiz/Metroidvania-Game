@@ -70,12 +70,8 @@ public class DiveController : AbilityController {
     }
 
     // CheckDone is called once per frame
-    private void Update() {
+    private void FixedUpdate() {
         if (isActive) {
-            if (movement.isInUI) {
-                isCharged = false;
-                isCharging = false;
-            }
 
             if (isCharging) {
                 elapsedChargeTime += Time.deltaTime;
@@ -101,7 +97,7 @@ public class DiveController : AbilityController {
                 }
             }
 
-            if (!isStopping && upgradeLevel >= 8 && jumpPressed && !movement.isInUI) {
+            if (!isStopping && upgradeLevel >= 8 && jumpPressed) {
                 isStopping = true;
                 tempPosition = body.position;
                 // Stop();

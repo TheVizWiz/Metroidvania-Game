@@ -102,7 +102,6 @@ public class DashController : AbilityController {
 
     public override bool Activate() {
         if (isActive) return true;
-        if (movement.isInUI) return false;
 
         bool willActivate = false;
         if (!isActive && movement.canMove && isPressed) {

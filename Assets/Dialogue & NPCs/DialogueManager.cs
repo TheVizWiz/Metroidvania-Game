@@ -2,10 +2,12 @@ using System.Collections;
 using Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.Events;
 using UnityEngine.UI;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
@@ -32,45 +34,47 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
     [HideInInspector] public bool isMoving;
     [HideInInspector] public bool isAnimatingText;
     [HideInInspector] public UnityEvent hideEvent;
-    private bool pressedInteract;
-    private bool passedOption;
+    private Coroutine animationRoutine;
+    private bool canInteract;
+    private bool selectedOption;
     private bool optionsAreShown;
-    private bool waitToUpdatePlayerUI;
-    private bool pauseUpdate;
+
     void Awake() {
         // NPCManager.Initialize();
         GameManager.dialogueManager = this;
         transform.anchoredPosition = hidePosition;
         currentPosition = DialogueManagerPosition.HiddenPosition;
+
         // SetNPC(NPCManager.npcs["Maya"]);
         if (fadeIn) {
             canvasGroup.alpha = 0;
         }
+
+        canInteract = true;
+        animationRoutine = null;
     }
 
     // Update is called once per frame
-    void Update() {
-
-        if (waitToUpdatePlayerUI) {
-            waitToUpdatePlayerUI = false;
-            GameManager.playerMovement.isInUI = false;
+    public void Interact() {
+        if (!canInteract) return;
+        if (currentPosition == DialogueManagerPosition.HiddenPosition) {
+            Show();
+            GameManager.playerMovement.input.Player.Disable();
+            return;
         }
 
-        if (pauseUpdate) {
-            pauseUpdate = false;
-        } else if (pressedInteract && currentPosition == DialogueManagerPosition.ShownPosition ) {
-            pressedInteract = false;
-            if (!passedOption) {
-                if (activeDialogue != null && activeDialogue.HasNextLine() && !isAnimatingText) {
-                    StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0));
-                    pressedInteract = false;
-                }
-            } else {
-                if ((activeDialogue == null) || (activeDialogue.IsLastLine() && !optionsAreShown && !isAnimatingText)) {
+        if (!optionsAreShown) {
+            if (!isAnimatingText) {
+                if (activeDialogue.IsLastLine() && selectedOption)
                     Hide();
-                } else if (activeDialogue != null && activeDialogue.HasNextLine() && !isAnimatingText) {
-                    StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0));
-                    pressedInteract = false;
+                else 
+                    animationRoutine = StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0));
+            } else {
+                StopCoroutine(animationRoutine);
+                dialogueText.text = activeDialogue.GetCurrentLine();
+                isAnimatingText = false;
+                if (!selectedOption && activeDialogue.IsLastLine()) {
+                    ShowOptions();
                 }
             }
         }
@@ -78,28 +82,28 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
 
     public void Show() {
         activeDialogue = npc.ActivateDialogue();
-        passedOption = false;
+        selectedOption = false;
         optionsAreShown = false;
         optionsPaneGroup.alpha = 0;
         dialogueText.text = "";
         foreach (Transform transform in optionsPane.transform) {
             Destroy(transform.gameObject);
         }
+
         activeDialogue.ResetLines();
         if (MovePosition(DialogueManagerPosition.ShownPosition)) {
-            GameManager.playerMovement.isInUI = true;
+            // GameManager.playerMovement.isInUI = true;
             if (activeDialogue != null && activeDialogue.HasNextLine() && !isAnimatingText) {
-                StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0.5f));
+                animationRoutine = StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0.5f));
             }
         }
     }
+
     public void Hide() {
-        if (MovePosition(DialogueManagerPosition.HiddenPosition)) {
-            waitToUpdatePlayerUI = true;
-        }
         activeDialogue?.ResetLines();
         activeDialogue = null;
         hideEvent.Invoke();
+        MovePosition(DialogueManagerPosition.HiddenPosition);
     }
 
     private bool MovePosition(DialogueManagerPosition position) {
@@ -109,42 +113,41 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
         if (!moveIn) {
             transform.anchoredPosition = showPosition;
         }
+
         isMoving = true;
         currentPosition = position;
         Vector2 endPosition = position == DialogueManagerPosition.HiddenPosition ? hidePosition : showPosition;
         Vector2 startPosition = transform.anchoredPosition;
         float fadeStart = position == DialogueManagerPosition.HiddenPosition ? 1 : 0;
         if (fadeIn) {
-            LeanTween.value(transform.gameObject, f => {
-                canvasGroup.alpha = f;
-            }, fadeStart, 1 - fadeStart, time).setOnComplete(ResetMoveBool);
+            LeanTween.value(transform.gameObject, f => { canvasGroup.alpha = f; }, fadeStart, 1 - fadeStart, time)
+                .setOnComplete(o => isMoving = false);
         }
 
         if (moveIn) {
-            LeanTween.value(transform.gameObject, f => {
-                transform.anchoredPosition = new Vector2(Mathf.SmoothStep(startPosition.x, endPosition.x, f), Mathf.SmoothStep(startPosition.y, endPosition.y, f));
-            }, 0, 1, time).setOnComplete(ResetMoveBool);
+            LeanTween.value(transform.gameObject,
+                f => {
+                    transform.anchoredPosition = new Vector2(Mathf.SmoothStep(startPosition.x, endPosition.x, f),
+                        Mathf.SmoothStep(startPosition.y, endPosition.y, f));
+                }, 0, 1, time).setOnComplete(o => isMoving = false);
         }
 
         return true;
     }
 
-    private void ResetMoveBool() {
-        isMoving = false;
-    }
 
     public bool SetNPC(NPC npc) {
-
         if (npc == null) {
             activeDialogue = null;
             return true;
         }
+
         this.npc = npc;
         activeDialogue = npc.ActivateDialogue();
         if (activeDialogue == null) return false;
         npcName.text = npc.name;
         npcDescription.text = npc.description;
-        passedOption = false;
+        selectedOption = false;
         dialogueText.text = "";
         return true;
     }
@@ -152,48 +155,39 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
     private IEnumerator AnimateText(string text, float startWaitTime) {
         isAnimatingText = true;
         int totalCharacters = text.Length;
-        
+
         yield return new WaitForSeconds(startWaitTime);
         for (int i = 0; i <= totalCharacters; i++) {
-            if (pressedInteract && !pauseUpdate) {
-                dialogueText.text = text;
-                isAnimatingText = false;
-                if (!passedOption && activeDialogue.IsLastLine()) {
-                    ShowOptions();
-                }
-                yield break;
-            } 
             dialogueText.text = text.Substring(0, i);
             yield return new WaitForSeconds(1 / charactersPerSecond);
         }
-        
-        if (!passedOption && activeDialogue.IsLastLine()) {
+
+        if (!selectedOption && activeDialogue.IsLastLine()) {
             ShowOptions();
         }
+
         isAnimatingText = false;
     }
 
 
-    public void Interact() {
-        pressedInteract = true;
-    }
-
     private void ChooseOption(TextMeshProUGUI textMeshProUgui) {
-        print("chose an option");
+        if (!canInteract) return;
         if (!activeDialogue.EndDialogue(textMeshProUgui.text)) {
             HideOptions(false);
             return;
         }
-        HideOptions(true);
 
+        HideOptions(true);
     }
 
     private void ShowOptions() {
         if (activeDialogue.options.Count == 0) {
             optionsAreShown = false;
-            passedOption = true;
+            selectedOption = true;
             return;
         }
+
+        canInteract = false;
         foreach (DialogueOption option in activeDialogue.options) {
             GameObject optionObject = Instantiate(optionPrefab, optionsPane.transform, false);
             TextMeshProUGUI text = optionObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -205,27 +199,23 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
         }
 
         optionsAreShown = true;
-        passedOption = true;
-        LeanTween.value(gameObject, f => {
-            optionsPaneGroup.alpha = f;
-        }, 0, 1, time);
+        selectedOption = true;
+        LeanTween.value(gameObject, f => { optionsPaneGroup.alpha = f; }, 0, 1, time)
+            .setOnComplete(delegate(object o) { canInteract = true; });
     }
 
-    private void HideOptions(bool flag) {
+    private void HideOptions(bool ableToPickOption) {
         optionsAreShown = false;
         foreach (Transform transform in optionsPane.transform) {
             Destroy(transform.gameObject);
         }
-        if (flag) {
-            StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0));
-        } else {
 
-            StartCoroutine(AnimateText(npc.autoDeclineMessage, 0));
+        if (ableToPickOption) {
+            animationRoutine = StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0));
+        } else {
+            animationRoutine = StartCoroutine(AnimateText(npc.autoDeclineMessage, 0));
             activeDialogue.ClearLines();
         }
-
-        pauseUpdate = true;
-
     }
 
     public DialogueManagerPosition CurrentPosition {

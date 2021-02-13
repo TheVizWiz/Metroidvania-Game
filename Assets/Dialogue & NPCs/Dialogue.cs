@@ -16,6 +16,8 @@ public class Dialogue {
     // public Dictionary<string, int> requirements;
     public List<InventoryItem> requirements;
 
+    private string currentLine;
+
     public Dialogue() {
         lines = new List<string>();
         staticLines = new List<string>();
@@ -26,7 +28,12 @@ public class Dialogue {
     public string GetNextLine() {
         string s = lines[0];
         lines.RemoveAt(0);
+        currentLine = s;
         return s;
+    }
+
+    public string GetCurrentLine() {
+        return currentLine;
     }
 
     public bool HasNextLine() {
